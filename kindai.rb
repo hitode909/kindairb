@@ -22,7 +22,7 @@ def download(url)
 
   downloader.output_directory = $config[:output] if $config[:output]
 
-  Kindai::Util.logger.info "download #{book.title} to #{downloader.full_directory_path}"
+  Kindai::Util.logger.info "download #{book.title}(#{book.page} pages) to #{downloader.full_directory_path}"
   downloader.download
 end
 

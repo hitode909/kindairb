@@ -49,7 +49,7 @@ module Kindai
       (1..(1/0.0)).each { |i|
         begin
           next if has_file_at(i)
-          Kindai::Util.logger.info "downloading " + [@book.author, @book.title, "page #{i}"].join(' - ')
+          Kindai::Util.logger.info "downloading " + [@book.author, @book.title, "koma #{i}"].join(' - ')
           Kindai::Util.download(@book.image_url_at(i), path_at(i))
         rescue Interrupt => e
           Kindai::Util.logger.error "#{e.class}: #{e.message}"
