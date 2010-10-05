@@ -1,6 +1,3 @@
-require 'nokogiri'
-require 'open-uri'
-
 module Kindai
   class Book
     attr_accessor :detail_url

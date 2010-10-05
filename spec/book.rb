@@ -8,7 +8,7 @@ describe Kindai::Book do
   end
 
   it 'can initialize from detail url' do
-    book = Kindai::Book.new_from_detail_url("spec/BIBibDetail881214")
+    book = Kindai::Book.new_from_detail_url("spec/file/BIBibDetail881214")
     book.permalink.should == "http://kindai.da.ndl.go.jp/info:ndljp/pid/881214/1"
   end
 end
