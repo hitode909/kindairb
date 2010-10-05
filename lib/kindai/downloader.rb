@@ -56,9 +56,9 @@ module Kindai
           return
         rescue Exception, TimeoutError => e
           failed_count += 1
-          Kindai::Util.logger.warn "failed #{failed_count}/#{threshold}) #{e.class}: #{e.message}"
+          Kindai::Util.logger.warn "failed (#{failed_count}/#{threshold}) #{e.class}: #{e.message}"
           if failed_count >= threshold
-            Kindai::Util.logger.info "exit"
+            Kindai::Util.logger.info "done"
             return
           else
             Kindai::Util.logger.info "sleep and retry"
