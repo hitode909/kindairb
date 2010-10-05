@@ -1,5 +1,10 @@
-module Kindai
-  def download(url, file)
+# -*- coding: utf-8 -*-
+module Kindai::Util
+  def self.logger
+    @logger ||= Logger.new(STDOUT)
+  end
+
+  def self.download(url, file)
     total = nil
     open(file, 'w') {|local|
       got = open(url,
@@ -14,5 +19,11 @@ module Kindai
         local.write(remote.read)
       }
     }
+  rescue Exception, TimeoutError => error
+    if File.exists?(file)
+      logger.debug "delete cache"
+      File.delete(file)
+    end
+    raise error
   end
 end
