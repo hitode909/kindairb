@@ -2,6 +2,8 @@
 module Kindai::Util
   def self.logger
     @logger ||= Logger.new(STDOUT)
+    @logger.level = Logger::INFO
+    @logger
   end
 
   def self.download(url, file)
