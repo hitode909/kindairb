@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 # -*- coding: utf-8 -*-
-$:.unshift('lib')
-require 'kindai'
+require 'lib/kindai'
 require 'optparse'
 require 'logger'
 
