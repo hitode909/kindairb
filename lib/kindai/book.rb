@@ -1,22 +1,13 @@
 # -*- coding: utf-8 -*-
 module Kindai
   class Book
-    attr_accessor :detail_url
-    attr_accessor :book_id
+    attr_accessor :permalink_url
 
-    def self.new_from_detail_url(detail_url)
-      raise "not BIBilDetail" unless detail_url.match(/BIBibDetail/)
+    def self.new_from_permalink(permalink_url)
+      raise "not info:ndljp" unless permalink_url.match(/info\:ndljp/)
       me = new
-      me.detail_url = detail_url
+      me.permalink_url = permalink_url
       me
-    end
-
-    def permalink
-      @permalink ||=
-        begin
-          @book_id = detail_page.at('a[href*="pid"]')['href'].scan(/(?:pid\/)(\d+)/).flatten.first
-          "http://kindai.da.ndl.go.jp/info:ndljp/pid/#{book_id}/"
-        end
     end
 
     # attributes
@@ -43,14 +34,9 @@ module Kindai
       @image_page_url ||=
         begin
           Kindai::Util.logger.debug "fetch permalink page"
-          base = Nokogiri::HTML open(permalink)
+          page_url = URI.parse(permalink_url) + permalink_page.at('frame[name="W_BODY"]')['src']
 
-          page_url = URI.parse(permalink) + base.at('frame[name="W_BODY"]')['src']
-
-          # リダイレクトさき
           page_file = open(page_url.to_s)
-
-          # でかいがぞうがあるページのURL
           page_file.base_uri.to_s + '&vs=5000,5000,0,0,0,0,0,0'
         end
     end
@@ -75,12 +61,45 @@ module Kindai
         end
     end
 
+    # permalink_url = @permalink_url
+
+    def permalink_page
+      @permalink_page ||=
+        begin
+          Kindai::Util.logger.debug "fetch permalink page"
+          page = open(permalink_url) rescue open(URI.escape(permalink_url))
+          Nokogiri page
+        end
+    end
+
+    def detail_url
+      root = URI.parse('http://kindai.ndl.go.jp/BIBibDetail.php')
+      params = { }
+      control_page.search('input').each{ |input|
+        params[input['name']] = input['value'] if input['value']
+      }
+      path = '?' + params.each_pair.map{ |k, v| [URI.escape(k), URI.escape(v)].join('=')}.join('&')
+      root + path
+    end
+
     def detail_page
       @detail_page ||=
         begin
           Kindai::Util.logger.debug "fetch detail page"
           page = open(detail_url) rescue open(URI.escape(detail_url))
           Nokogiri page
+        end
+    end
+
+    def control_url
+      URI.parse(permalink_url) + permalink_page.at('frame[name="W_CONTROL"]')['src']
+    end
+
+    def control_page
+      @control_page ||=
+        begin
+          Kindai::Util.logger.debug "fetch permalink page"
+          Nokogiri open(control_url)
         end
     end
 
