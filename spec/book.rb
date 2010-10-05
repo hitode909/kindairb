@@ -4,30 +4,19 @@ require 'kindai'
 
 describe Kindai::Book do
   before do
-    @shibukawa = Kindai::Book.new_from_detail_url("spec/file/BIBibDetail881214")
-    @shibukawa.instance_variable_set(:@permalink, "spec/file/index881214")
-  end
-
-  it 'can initialize from book id' do
-    book = Kindai::Book.new_from_book_id(881214)
-    book.permalink.should == "http://kindai.da.ndl.go.jp/info:ndljp/pid/881214/1"
-  end
-
-  it 'can initialize from detail url' do
-    book = Kindai::Book.new_from_detail_url("spec/file/BIBibDetail881214")
-    book.permalink.should == "http://kindai.da.ndl.go.jp/info:ndljp/pid/881214/1"
+    @book = Kindai::Book.new_from_permalink('http://kindai.ndl.go.jp/info:ndljp/pid/922693')
   end
 
   it 'has title' do
-    @shibukawa.title.should == '渋川流名誉柔術'
+    @book.title.should == '正義の叫'
   end
 
   it 'has page' do
-    @shibukawa.page.should == 197
+    @book.page.should == 31
   end
 
   it 'has author' do
-    @shibukawa.author.should == '岡田，霞船'
+    @book.author.should == '正義熱血社'
   end
 
 end
