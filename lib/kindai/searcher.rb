@@ -17,6 +17,9 @@ module Kindai
         links << "http://kindai.ndl.go.jp/#{link}"
       end
       return links
+    rescue
+      puts "その検索ワードむり。多分一件も資料無い"
+      exit
     end
   end
 end
