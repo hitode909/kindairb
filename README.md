@@ -13,6 +13,12 @@ kindai.rb
 
     ruby kindai.rb http://kindai.ndl.go.jp/info:ndljp/pid/922693
 
+検索ワードを指定して根刮ぎ取ってきたい場合は
+
+    ruby nekosogi.rb "死 糞"
+
+のようにすることが出来ます.
+
 必要
 ----
 
