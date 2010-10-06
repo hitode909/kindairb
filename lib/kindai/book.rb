@@ -21,6 +21,8 @@ module Kindai
 
     def page
       NKF.nkf("-m0Z1", metadata['形態'].scan(/^(.*)(?:ｐ)/).flatten.first).to_i
+    rescue
+      metadata['形態'].scan(/^(.*)(?:ｐ)/).flatten.first
     end
 
     def image_url_at(i)
