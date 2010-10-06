@@ -7,6 +7,20 @@ module Kindai::Util
   end
 
   def self.download(url, file)
+    open(file, 'w') {|local|
+      got = open(url) {|remote|
+        local.write(remote.read)
+      }
+    }
+  rescue Exception, TimeoutError => error
+    if File.exists?(file)
+      logger.debug "delete cache"
+      File.delete(file)
+    end
+    raise error
+  end
+
+  def self.rich_download(url, file)
     total = nil
     open(file, 'w') {|local|
       got = open(url,
