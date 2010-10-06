@@ -53,7 +53,7 @@ module Kindai
           Kindai::Util.download(@book.image_url_at(i), path_at(i))
         rescue Interrupt => e
           Kindai::Util.logger.error "#{e.class}: #{e.message}"
-          return
+          exit 1
         rescue Exception, TimeoutError => e
           failed_count += 1
           Kindai::Util.logger.warn "failed (#{failed_count}/#{threshold}) #{e.class}: #{e.message}"
