@@ -28,4 +28,10 @@ module Kindai::Util
     end
     raise error
   end
+
+  # input:  {:a => 'a', :b => 'bbb'}
+  # output: 'a=a&b=bbb
+  def self.expand_params(params)
+    params.each_pair.map{ |k, v| [URI.escape(k.to_s), URI.escape(v.to_s)].join('=')}.join('&')
+  end
 end

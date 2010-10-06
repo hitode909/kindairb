@@ -12,4 +12,5 @@ module Kindai
   require 'kindai/book'
   require 'kindai/downloader'
   require 'kindai/searcher'
+  require 'kindai/interface'
 end

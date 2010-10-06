@@ -4,28 +4,31 @@ $:.unshift('lib')
 require 'kindai'
 require 'optparse'
 
-$config = { }
-parser = OptionParser.new("example: ruby kindai.rb http://kindai.ndl.go.jp/info:ndljp/pid/922693") {|opt|
-  opt.on('-o OUTPUT_DIRECTORY', '--output', 'specify output directory') {|v| $config[:output] = v}
+# parse option
+banner = <<EOF
+download by url:     ruby kindai.rb http://kindai.ndl.go.jp/info:ndljp/pid/922693
+download by keyword: ruby kindai.rb 調理法
+EOF
+config = { }
+parser = OptionParser.new(banner) {|opt|
+  opt.on('-o OUTPUT_DIRECTORY', '--output', 'specify output directory') {|v|
+    config[:output_directory] = v
+  }
   opt.parse!(ARGV)
 }
 
+# validate argv
 unless ARGV.length > 0
   puts parser.help
   exit 1
 end
 
-def download(url)
-  book = Kindai::Book.new_from_permalink(url)
-
-  downloader = Kindai::Downloader.new_from_book(book)
-
-  downloader.output_directory = $config[:output] if $config[:output]
-
-  Kindai::Util.logger.info "download #{book.title}(#{book.page} pages) to #{downloader.full_directory_path}"
-  downloader.download
-end
-
-ARGV.each{ |url|
-  download(url)
+# download
+# TODO: AND検索
+ARGV.each{ |arg|
+  if URI.regexp =~ arg and URI.parse(arg).is_a? URI::HTTP
+    Kindai::Interface.download_url arg, config
+  else
+    Kindai::Interface.download_keyword arg, config
+  end
 }
