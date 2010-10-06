@@ -44,9 +44,9 @@ module Kindai
     end
 
     def download_images
-      failed_count = 0
       threshold = 3
       (1..(1/0.0)).each { |i|
+        failed_count = 0
         begin
           next if has_file_at(i)
           Kindai::Util.logger.info "downloading " + [@book.author, @book.title, "koma #{i}"].join(' - ')
