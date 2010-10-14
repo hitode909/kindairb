@@ -36,7 +36,7 @@ module Kindai
 
     # TODO: output directory
     def path_at(i)
-      "#{directory_path}/#{@book.title}-#{i}.jpg"
+      "#{directory_path}/%03d.jpg" % i
     end
 
     def create_directory
