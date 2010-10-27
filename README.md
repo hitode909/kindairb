@@ -21,9 +21,13 @@ URLの代わりに検索ワードを指定すると，ヒットした本をま�
 
     ruby kindai.rb "松茸 調理"
 
-以下のように，--outputオプションで，保存先を指定できます．指定したディレクトリの下に，書名のディレクトリができます．
+ --outputオプションで，保存先を指定できます．指定したディレクトリの下に，書名のディレクトリができます．
 
     ruby kindai.rb http://kindai.ndl.go.jp/info:ndljp/pid/922693 --output ~/Documents/
+
+ --trimmingオプションで，ダウンロードした画像を左右のページにトリミングします．ImageMagickが必要です．
+
+    ruby kindai.rb http://kindai.ndl.go.jp/info:ndljp/pid/922693 --trimming
 
 動作環境
 --------
@@ -31,6 +35,8 @@ URLの代わりに検索ワードを指定すると，ヒットした本をま�
 * Ruby が必要です．
 * Nokogiri が必要なので，RubyGems でインストールしてください．
 * Gemfile を書いてあるので，bundler が入ってる環境では bundle install コマンドを実行するだけで必要な Gem が入ります．
+* トリミングする場合は，ImageMagickが必要です．
+[ImageMagick: Convert, Edit, and Compose Images](http://www.imagemagick.org/script/index.php)
 
 その他
 ------
