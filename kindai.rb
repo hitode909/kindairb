@@ -15,20 +15,19 @@ parser = OptionParser.new(banner) {|opt|
     config[:output_directory] = v
   }
   opt.on('-t', '--trimming', 'enable trimming') {|v|
-    Kindai::Util.logger.info "trimming enabled"
     Kindai::Util.check_trim
     config[:use_trim] = true
   }
   opt.on('-p', '--pdf', 'enable pdf generating') {|v|
-    Kindai::Util.logger.info "pdf output enabled"
     config[:use_pdf] = true
   }
   opt.on('-d', '--debug', 'enable debug mode') {|v|
-    Kindai::Util.logger.info "debug mode enabled"
     config[:debug_mode] = true
   }
   opt.parse!(ARGV)
 }
+
+Kindai::Util.debug_mode if config[:debug_mode]
 
 # validate argv
 unless ARGV.length > 0

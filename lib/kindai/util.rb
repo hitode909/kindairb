@@ -8,6 +8,7 @@ module Kindai::Util
 
   def self.debug_mode
     self.logger.level = Logger::DEBUG
+    Kindai::Util.logger.info "debug mode enabled"
   end
 
   def self.download(url, file)

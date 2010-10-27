@@ -18,10 +18,12 @@ module Kindai
     end
 
     def use_trim
+      Kindai::Util.logger.info "trimming enabled"
       @use_trim = true
     end
 
     def use_pdf
+      Kindai::Util.logger.info "pdf output enabled"
       @use_pdf = true
     end
 
@@ -57,10 +59,17 @@ module Kindai
       (1..(1/0.0)).each { |i|
         failed_count = 0
         begin
-          next if has_file_at(i)
-          Kindai::Util.logger.info "downloading " + [@book.author, @book.title, "koma #{i}"].join(' - ')
-          Kindai::Util.download(@book.image_url_at(i), path_at(i))
-          Kindai::Util.trim(path_at(i)) if @use_trim
+          # XXX
+          if @use_trim
+            next if has_trimmed_file_at(i)
+            Kindai::Util.logger.info "downloading " + [@book.author, @book.title, "koma #{i}"].join(' - ')
+            Kindai::Util.download(@book.image_url_at(i), path_at(i)) unless has_whole_file_at(i)
+            Kindai::Util.trim(path_at(i)) if @use_trim
+          else
+            next if has_whole_file_at(i)
+            Kindai::Util.logger.info "downloading " + [@book.author, @book.title, "koma #{i}"].join(' - ')
+            Kindai::Util.download(@book.image_url_at(i), path_at(i))
+          end
         rescue Interrupt => e
           Kindai::Util.logger.error "#{e.class}: #{e.message}"
           exit 1
@@ -79,12 +88,12 @@ module Kindai
       }
     end
 
-    def has_file_at(i)
-      if @use_trim
-        File.size?(Kindai::Util.append_suffix(path_at(i), '0')) && File.size?(Kindai::Util.append_suffix(path_at(i), '1'))
-      else
-        File.size?(path_at(i))
-      end
+    def has_whole_file_at(i)
+      File.size?(path_at(i))
+    end
+
+    def has_trimmed_file_at(i)
+      File.size?(Kindai::Util.append_suffix(path_at(i), '0')) && File.size?(Kindai::Util.append_suffix(path_at(i), '1'))
     end
 
     def generate_pdf
