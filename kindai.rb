@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 # -*- coding: utf-8 -*-
-$:.unshift('lib')
+$:.unshift(File.dirname(__FILE__) + '/lib')
 require 'kindai'
 require 'optparse'
 
