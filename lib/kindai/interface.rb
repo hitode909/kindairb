@@ -6,6 +6,7 @@ module Kindai::Interface
     downloader.output_directory = config[:output_directory] if config[:output_directory]
     downloader.use_trim if config[:use_trim]
     downloader.use_pdf if config[:use_pdf]
+    downloader.debug_mode if config[:debug_mode]
     Kindai::Util.logger.info "download #{book.title}(#{book.page} pages) to #{downloader.full_directory_path}"
     downloader.download
   end

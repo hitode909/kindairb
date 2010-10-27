@@ -23,6 +23,10 @@ parser = OptionParser.new(banner) {|opt|
     Kindai::Util.logger.info "pdf output enabled"
     config[:use_pdf] = true
   }
+  opt.on('-d', '--debug', 'enable debug mode') {|v|
+    Kindai::Util.logger.info "debug mode enabled"
+    config[:debug_mode] = true
+  }
   opt.parse!(ARGV)
 }
 

@@ -6,6 +6,10 @@ module Kindai::Util
     @logger
   end
 
+  def self.debug_mode
+    self.logger.level = Logger::DEBUG
+  end
+
   def self.download(url, file)
     open(file, 'w') {|local|
       got = open(url) {|remote|
