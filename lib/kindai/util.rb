@@ -61,8 +61,13 @@ module Kindai::Util
     raise "#{path} not exist" unless File.exists? path
 
     Kindai::Util.logger.info "trimming #{path}"
+
+    Kindai::Util.logger.debug "convert -fuzz 25% -trim '#{path}' '#{path}'"
     system "convert -fuzz 25% -trim '#{path}' '#{path}'"
+
+    Kindai::Util.logger.debug "convert -crop 50%x100% '#{path}' '#{path}'"
     system "convert -crop 50%x100% '#{path}' '#{path}'"
+
     File.rename append_suffix(path, '0'), append_suffix(path, 'tmp')
     File.rename append_suffix(path, '1'), append_suffix(path, '0')
     File.rename append_suffix(path, 'tmp'), append_suffix(path, '1')
@@ -80,6 +85,7 @@ module Kindai::Util
 
     app_path = File.expand_path(File.dirname(__FILE__) + '/../../app/topdf.app')
     directory = File.expand_path(directory)
+    Kindai::Util.logger.debug "open -a #{app_path} -W '#{directory}'"
     system "open -a #{app_path} -W '#{directory}'"
     Kindai::Util.logger.info "generating pdf done"
   end
