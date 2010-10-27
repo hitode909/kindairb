@@ -4,6 +4,7 @@ module Kindai::Interface
     book = Kindai::Book.new_from_permalink(url)
     downloader = Kindai::Downloader.new_from_book(book)
     downloader.output_directory = config[:output_directory] if config[:output_directory]
+    downloader.use_trim if config[:trim]
     Kindai::Util.logger.info "download #{book.title}(#{book.page} pages) to #{downloader.full_directory_path}"
     downloader.download
   end

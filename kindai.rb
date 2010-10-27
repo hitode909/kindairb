@@ -14,6 +14,11 @@ parser = OptionParser.new(banner) {|opt|
   opt.on('-o OUTPUT_DIRECTORY', '--output', 'specify output directory') {|v|
     config[:output_directory] = v
   }
+  opt.on('-t', '--trimming', 'enable trimming') {|v|
+    Kindai::Util.logger.info "trimming enabled"
+    Kindai::Util.check_trim
+    config[:use_trim] = true
+  }
   opt.parse!(ARGV)
 }
 

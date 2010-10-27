@@ -16,6 +16,10 @@ module Kindai
       download_images
     end
 
+    def use_trim
+      @use_trim = true
+    end
+
     def directory_path
       default = [@book.author, @book.title].compact.join(' - ')
       default = @output_directory + '/' + default if @output_directory
@@ -51,6 +55,7 @@ module Kindai
           next if has_file_at(i)
           Kindai::Util.logger.info "downloading " + [@book.author, @book.title, "koma #{i}"].join(' - ')
           Kindai::Util.download(@book.image_url_at(i), path_at(i))
+          Kindai::Util.trim(path_at(i))
         rescue Interrupt => e
           Kindai::Util.logger.error "#{e.class}: #{e.message}"
           exit 1
@@ -70,7 +75,7 @@ module Kindai
     end
 
     def has_file_at(i)
-      File.size?(path_at(i))
+      @use_trim ? File.size?(path_at(i)) : (File.size?(Kindai::Util.append_suffix(path_at(i), '0')) && File.size?(Kindai::Util.append_suffix(path_at(i), '0')))
     end
   end
 end
