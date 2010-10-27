@@ -68,4 +68,15 @@ module Kindai::Util
   def self.append_suffix(path, suffix)
     path.gsub(/\.(\w+)$/, "-#{suffix}.\\1")
   end
+
+  def self.generate_pdf(directory)
+    raise "#{directory} is not directory." unless File.directory? directory
+
+    Kindai::Util.logger.info "generating pdf to Desktop"
+
+    app_path = File.expand_path(File.dirname(__FILE__) + '/../../app/topdf.app')
+    directory = File.expand_path(directory)
+    system "open -a #{app_path} -W '#{directory}'"
+    Kindai::Util.logger.info "generating pdf done"
+  end
 end

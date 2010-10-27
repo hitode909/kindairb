@@ -19,6 +19,10 @@ parser = OptionParser.new(banner) {|opt|
     Kindai::Util.check_trim
     config[:use_trim] = true
   }
+  opt.on('-p', '--pdf', 'enable pdf generating') {|v|
+    Kindai::Util.logger.info "pdf output enabled"
+    config[:use_pdf] = true
+  }
   opt.parse!(ARGV)
 }
 
