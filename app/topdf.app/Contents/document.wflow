@@ -21,6 +21,114 @@
 					<false/>
 					<key>Types</key>
 					<array>
+						<string>*</string>
+					</array>
+				</dict>
+				<key>AMActionVersion</key>
+				<string>v.1.0</string>
+				<key>AMParameterProperties</key>
+				<dict>
+					<key>variableUUID</key>
+					<dict>
+						<key>isPathPopUp</key>
+						<false/>
+						<key>selectedVariableUUID</key>
+						<string>505E6BA1-F8E2-4F19-BA02-BED5EBE62BF7</string>
+					</dict>
+				</dict>
+				<key>AMProvides</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Types</key>
+					<array>
+						<string>*</string>
+					</array>
+				</dict>
+				<key>AMRequiredResources</key>
+				<array/>
+				<key>ActionBundlePath</key>
+				<string>/System/Library/Automator/Set Value of Variable.action</string>
+				<key>ActionName</key>
+				<string>変数の値を設定</string>
+				<key>ActionParameters</key>
+				<dict>
+					<key>variableUUID</key>
+					<string>505E6BA1-F8E2-4F19-BA02-BED5EBE62BF7</string>
+				</dict>
+				<key>Application</key>
+				<array>
+					<string>Automator</string>
+				</array>
+				<key>BundleIdentifier</key>
+				<string>com.apple.Automator.Set_Value_of_Variable</string>
+				<key>CFBundleVersion</key>
+				<string>1.0</string>
+				<key>CanShowSelectedItemsWhenRun</key>
+				<true/>
+				<key>CanShowWhenRun</key>
+				<true/>
+				<key>Category</key>
+				<array>
+					<string>AMCategoryUtilities</string>
+				</array>
+				<key>Class Name</key>
+				<string>Set_Value_of_Variable</string>
+				<key>InputUUID</key>
+				<string>A2B473E6-3527-467D-866C-9C9D559C9DA3</string>
+				<key>Keywords</key>
+				<array>
+					<string>変数</string>
+					<string>バインド</string>
+					<string>入力</string>
+					<string>出力</string>
+					<string>記憶装置</string>
+				</array>
+				<key>OutputUUID</key>
+				<string>5DE8E96B-9118-4CA5-B08C-A543B77EB607</string>
+				<key>UUID</key>
+				<string>C6492E24-D1FC-422E-BF15-0D47945889CE</string>
+				<key>UnlocalizedApplications</key>
+				<array>
+					<string>Automator</string>
+				</array>
+				<key>arguments</key>
+				<dict>
+					<key>0</key>
+					<dict>
+						<key>default value</key>
+						<string></string>
+						<key>name</key>
+						<string>variableUUID</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>0</string>
+					</dict>
+				</dict>
+				<key>isViewVisible</key>
+				<true/>
+				<key>location</key>
+				<string>302.000000:859.000000</string>
+				<key>nibPath</key>
+				<string>/System/Library/Automator/Set Value of Variable.action/Contents/Resources/Japanese.lproj/main.nib</string>
+			</dict>
+			<key>isViewVisible</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>action</key>
+			<dict>
+				<key>AMAccepts</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Optional</key>
+					<false/>
+					<key>Types</key>
+					<array>
 						<string>com.apple.cocoa.path</string>
 					</array>
 				</dict>
@@ -45,7 +153,7 @@
 				<key>ActionBundlePath</key>
 				<string>/System/Library/Automator/Get Folder Contents.action</string>
 				<key>ActionName</key>
-				<string>Get Folder Contents</string>
+				<string>フォルダの内容を取得</string>
 				<key>ActionParameters</key>
 				<dict>
 					<key>recurse</key>
@@ -73,8 +181,8 @@
 				<string>C658BE06-0FF4-4366-BE97-C5180ED7E571</string>
 				<key>Keywords</key>
 				<array>
-					<string>File</string>
-					<string>Folder</string>
+					<string>ファイル</string>
+					<string>フォルダ</string>
 				</array>
 				<key>OutputUUID</key>
 				<string>587C6DDA-A177-4A5B-8DBB-4F447AC50136</string>
@@ -103,9 +211,9 @@
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>302.000000:759.000000</string>
+				<string>302.000000:754.000000</string>
 				<key>nibPath</key>
-				<string>/System/Library/Automator/Get Folder Contents.action/Contents/Resources/English.lproj/main.nib</string>
+				<string>/System/Library/Automator/Get Folder Contents.action/Contents/Resources/Japanese.lproj/main.nib</string>
 			</dict>
 			<key>isViewVisible</key>
 			<true/>
@@ -151,7 +259,7 @@
 				<key>ActionBundlePath</key>
 				<string>/System/Library/Automator/Filter Finder Items 2.action</string>
 				<key>ActionName</key>
-				<string>Filter Finder Items</string>
+				<string>Finder 項目にフィルタを適用</string>
 				<key>ActionParameters</key>
 				<dict>
 					<key>itemType</key>
@@ -276,9 +384,9 @@
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>302.000000:659.000000</string>
+				<string>302.000000:654.000000</string>
 				<key>nibPath</key>
-				<string>/System/Library/Automator/Filter Finder Items 2.action/Contents/Resources/English.lproj/main.nib</string>
+				<string>/System/Library/Automator/Filter Finder Items 2.action/Contents/Resources/Japanese.lproj/main.nib</string>
 			</dict>
 			<key>isViewVisible</key>
 			<true/>
@@ -318,7 +426,7 @@
 				<key>ActionBundlePath</key>
 				<string>/System/Library/Automator/Sort Finder Items.action</string>
 				<key>ActionName</key>
-				<string>Sort Finder Items</string>
+				<string>Finder 項目を並べ替える</string>
 				<key>ActionParameters</key>
 				<dict>
 					<key>sortIndicator</key>
@@ -348,10 +456,10 @@
 				<string>2E0F376A-D4E3-4340-99A4-CA2A79788AB9</string>
 				<key>Keywords</key>
 				<array>
-					<string>Sort</string>
-					<string>File</string>
-					<string>Folder</string>
-					<string>Name</string>
+					<string>並べ替え</string>
+					<string>ファイル</string>
+					<string>フォルダ</string>
+					<string>名前</string>
 				</array>
 				<key>OutputUUID</key>
 				<string>8F695D5D-4D93-4ABF-B519-56A2D22C78E1</string>
@@ -393,9 +501,9 @@
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>302.000000:382.000000</string>
+				<string>302.000000:431.000000</string>
 				<key>nibPath</key>
-				<string>/System/Library/Automator/Sort Finder Items.action/Contents/Resources/English.lproj/main.nib</string>
+				<string>/System/Library/Automator/Sort Finder Items.action/Contents/Resources/Japanese.lproj/main.nib</string>
 			</dict>
 			<key>isViewVisible</key>
 			<true/>
@@ -418,6 +526,8 @@
 				<string>1.0</string>
 				<key>AMParameterProperties</key>
 				<dict>
+					<key>autoGenerateOutputName</key>
+					<dict/>
 					<key>outputDirectory</key>
 					<dict>
 						<key>isPathPopUp</key>
@@ -425,6 +535,12 @@
 						<key>variableUUIDsInMenu</key>
 						<array/>
 					</dict>
+					<key>outputName</key>
+					<dict/>
+					<key>pageSizeMode</key>
+					<dict/>
+					<key>replaceExistingOutput</key>
+					<dict/>
 				</dict>
 				<key>AMProvides</key>
 				<dict>
@@ -440,7 +556,7 @@
 				<key>ActionBundlePath</key>
 				<string>/System/Library/Automator/New PDF from Images.action</string>
 				<key>ActionName</key>
-				<string>New PDF from Images</string>
+				<string>イメージから新規 PDF を作成</string>
 				<key>ActionParameters</key>
 				<dict>
 					<key>autoGenerateOutputName</key>
@@ -456,7 +572,7 @@
 				</dict>
 				<key>Application</key>
 				<array>
-					<string>Preview</string>
+					<string>プレビュー</string>
 				</array>
 				<key>BundleIdentifier</key>
 				<string>com.apple.Automator.NewPDFfromImages</string>
@@ -495,9 +611,133 @@
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>302.000000:279.000000</string>
+				<string>302.000000:328.000000</string>
 				<key>nibPath</key>
-				<string>/System/Library/Automator/New PDF from Images.action/Contents/Resources/English.lproj/main.nib</string>
+				<string>/System/Library/Automator/New PDF from Images.action/Contents/Resources/Japanese.lproj/main.nib</string>
+			</dict>
+			<key>isViewVisible</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>action</key>
+			<dict>
+				<key>AMAccepts</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Optional</key>
+					<false/>
+					<key>Types</key>
+					<array>
+						<string>com.apple.cocoa.path</string>
+					</array>
+				</dict>
+				<key>AMActionVersion</key>
+				<string>v.1.1</string>
+				<key>AMParameterProperties</key>
+				<dict>
+					<key>replaceExisting</key>
+					<dict/>
+					<key>toDirectory</key>
+					<dict>
+						<key>isPathPopUp</key>
+						<true/>
+						<key>selectedVariableUUID</key>
+						<string>505E6BA1-F8E2-4F19-BA02-BED5EBE62BF7</string>
+						<key>variableUUIDsInMenu</key>
+						<array>
+							<string>505E6BA1-F8E2-4F19-BA02-BED5EBE62BF7</string>
+						</array>
+					</dict>
+				</dict>
+				<key>AMProvides</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Types</key>
+					<array>
+						<string>com.apple.cocoa.path</string>
+					</array>
+				</dict>
+				<key>ActionBundlePath</key>
+				<string>/System/Library/Automator/Move Finder Items.action</string>
+				<key>ActionName</key>
+				<string>Finder 項目を移動</string>
+				<key>ActionParameters</key>
+				<dict>
+					<key>replaceExisting</key>
+					<true/>
+					<key>toDirectory</key>
+					<string></string>
+				</dict>
+				<key>Application</key>
+				<array>
+					<string>Finder</string>
+				</array>
+				<key>BundleIdentifier</key>
+				<string>com.apple.Automator.MoveFiles</string>
+				<key>CFBundleVersion</key>
+				<string>1.1</string>
+				<key>CanShowSelectedItemsWhenRun</key>
+				<true/>
+				<key>CanShowWhenRun</key>
+				<true/>
+				<key>Category</key>
+				<array>
+					<string>AMCategoryFilesAndFolders</string>
+				</array>
+				<key>Class Name</key>
+				<string>MoveFilesAction</string>
+				<key>InputUUID</key>
+				<string>1E0EFF78-1D61-4C92-AB49-EC8DC94421D4</string>
+				<key>Keywords</key>
+				<array>
+					<string>ファイル</string>
+					<string>移動</string>
+				</array>
+				<key>OutputUUID</key>
+				<string>323EBB06-FACD-471D-B8B9-08B7847901AB</string>
+				<key>UUID</key>
+				<string>27472853-E767-46E5-96AF-850DECC178C7</string>
+				<key>UnlocalizedApplications</key>
+				<array>
+					<string>Finder</string>
+				</array>
+				<key>arguments</key>
+				<dict>
+					<key>0</key>
+					<dict>
+						<key>default value</key>
+						<string>~/Desktop</string>
+						<key>name</key>
+						<string>toDirectory</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>0</string>
+					</dict>
+					<key>1</key>
+					<dict>
+						<key>default value</key>
+						<false/>
+						<key>name</key>
+						<string>replaceExisting</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>1</string>
+					</dict>
+				</dict>
+				<key>isViewVisible</key>
+				<true/>
+				<key>location</key>
+				<string>302.000000:123.000000</string>
+				<key>nibPath</key>
+				<string>/System/Library/Automator/Move Finder Items.action/Contents/Resources/Japanese.lproj/main.nib</string>
 			</dict>
 			<key>isViewVisible</key>
 			<true/>
@@ -505,26 +745,40 @@
 	</array>
 	<key>connectors</key>
 	<dict>
-		<key>0C482E5E-157A-46F3-B11C-0C5E9E76CC33</key>
+		<key>03BF2A5C-7132-4A07-A015-3FDB4672AE24</key>
 		<dict>
 			<key>from</key>
 			<string>E120C9E1-787B-4C76-8591-D0C689C4EA24 - E120C9E1-787B-4C76-8591-D0C689C4EA24</string>
 			<key>to</key>
 			<string>3DBB2FB6-FFAE-4805-8635-7A3C5A72FD68 - 3DBB2FB6-FFAE-4805-8635-7A3C5A72FD68</string>
 		</dict>
-		<key>0F6DD7B0-D1AE-41A1-9811-6CF9F8D3BB9A</key>
+		<key>2DDDB5F1-2D3B-44C9-9D4C-606BDBA3C1AC</key>
 		<dict>
 			<key>from</key>
 			<string>3DBB2FB6-FFAE-4805-8635-7A3C5A72FD68 - 3DBB2FB6-FFAE-4805-8635-7A3C5A72FD68</string>
 			<key>to</key>
 			<string>65517216-DB25-4F0B-98BD-6373BCA59368 - 65517216-DB25-4F0B-98BD-6373BCA59368</string>
 		</dict>
-		<key>4CF49582-F616-4779-BAF0-B048F8F4F3F8</key>
+		<key>7D8E2ABD-DFB5-4D92-AA8D-5DAB2407B3D3</key>
 		<dict>
 			<key>from</key>
 			<string>D1763845-D3CE-4D78-8625-1493F6ABB16E - D1763845-D3CE-4D78-8625-1493F6ABB16E</string>
 			<key>to</key>
 			<string>E120C9E1-787B-4C76-8591-D0C689C4EA24 - E120C9E1-787B-4C76-8591-D0C689C4EA24</string>
+		</dict>
+		<key>CD593456-6569-458B-8873-97A34275C8F1</key>
+		<dict>
+			<key>from</key>
+			<string>C6492E24-D1FC-422E-BF15-0D47945889CE - C6492E24-D1FC-422E-BF15-0D47945889CE</string>
+			<key>to</key>
+			<string>D1763845-D3CE-4D78-8625-1493F6ABB16E - D1763845-D3CE-4D78-8625-1493F6ABB16E</string>
+		</dict>
+		<key>FA344918-4F5C-48DF-8D19-812C5BF5B3A9</key>
+		<dict>
+			<key>from</key>
+			<string>65517216-DB25-4F0B-98BD-6373BCA59368 - 65517216-DB25-4F0B-98BD-6373BCA59368</string>
+			<key>to</key>
+			<string>27472853-E767-46E5-96AF-850DECC178C7 - 27472853-E767-46E5-96AF-850DECC178C7</string>
 		</dict>
 	</dict>
 	<key>state</key>
@@ -540,7 +794,7 @@
 				<key>subviewState</key>
 				<array>
 					<string>0.000000, 0.000000, 381.000000, 515.000000, NO</string>
-					<string>0.000000, 516.000000, 381.000000, 239.000000, NO</string>
+					<string>0.000000, 516.000000, 381.000000, 140.000000, NO</string>
 				</array>
 			</dict>
 			<key>actionsMinorSplitViewState</key>
@@ -580,8 +834,8 @@
 			<real>0.0</real>
 			<key>subviewState</key>
 			<array>
-				<string>0.000000, 0.000000, 381.000000, 800.000000, NO</string>
-				<string>382.000000, 0.000000, 619.000000, 800.000000, NO</string>
+				<string>0.000000, 0.000000, 381.000000, 701.000000, NO</string>
+				<string>382.000000, 0.000000, 619.000000, 701.000000, NO</string>
 			</array>
 		</dict>
 		<key>minorSplitViewState</key>
@@ -590,15 +844,26 @@
 			<real>162</real>
 			<key>subviewState</key>
 			<array>
-				<string>0.000000, 0.000000, 619.000000, 609.000000, NO</string>
-				<string>0.000000, 619.000000, 619.000000, 162.000000, NO</string>
+				<string>0.000000, 0.000000, 619.000000, 510.000000, NO</string>
+				<string>0.000000, 520.000000, 619.000000, 162.000000, NO</string>
 			</array>
 		</dict>
 		<key>windowFrame</key>
-		<string>{{337, 1}, {1000, 877}}</string>
+		<string>{{56, 0}, {1000, 778}}</string>
 		<key>workflowViewScrollPosition</key>
-		<string>{{0, 0}, {604, 609}}</string>
+		<string>{{0, 0}, {604, 510}}</string>
 	</dict>
+	<key>variables</key>
+	<array>
+		<dict>
+			<key>UUID</key>
+			<string>505E6BA1-F8E2-4F19-BA02-BED5EBE62BF7</string>
+			<key>identifier</key>
+			<string>com.apple.Automator.Variable.Storage</string>
+			<key>name</key>
+			<string>path</string>
+		</dict>
+	</array>
 	<key>workflowMetaData</key>
 	<dict>
 		<key>workflowTypeIdentifier</key>
