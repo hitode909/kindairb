@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+require 'open3'
+require 'tempfile'
+
 module Kindai::Util
   def self.logger
     @logger ||= Logger.new(STDOUT)
@@ -56,6 +59,17 @@ module Kindai::Util
 
   def self.check_trim
     raise "convert is required to trim" if `which convert`.empty?
+  end
+
+  def self.check_file(path)
+    if `which convert`.empty?
+      Kindai::Util.logger.warn 'convert is required to check file.'
+      return true
+    end
+
+    stdin, stdout, stderr = Open3.popen3('convert', path, Tempfile.new('dummy').path)
+    r = stderr.read
+    r.empty?
   end
 
   def self.trim(path)

@@ -64,6 +64,10 @@ module Kindai
             next if has_trimmed_file_at(i)
             Kindai::Util.logger.info "downloading " + [@book.author, @book.title, "koma #{i}"].join(' - ')
             Kindai::Util.download(@book.image_url_at(i), path_at(i)) unless has_whole_file_at(i)
+            unless Kindai::Util.check_file path_at(i)
+              File.delete path_at(i)
+              raise 'failed to download'
+            end
             Kindai::Util.trim(path_at(i)) if @use_trim
           else
             next if has_whole_file_at(i)
