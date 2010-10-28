@@ -79,15 +79,23 @@ module Kindai::Util
     path.gsub(/\.(\w+)$/, "-#{suffix}.\\1")
   end
 
-  def self.generate_pdf(directory)
+  def self.generate_pdf(directory, title = nil)
     raise "#{directory} is not directory." unless File.directory? directory
 
-    Kindai::Util.logger.info "generating pdf to Desktop"
+    Kindai::Util.logger.info "generating pdf"
 
     app_path = File.expand_path(File.dirname(__FILE__) + '/../../app/topdf.app')
     directory = File.expand_path(directory)
     Kindai::Util.logger.debug "open -a #{app_path} -W '#{directory}'"
     system "open -a #{app_path} -W '#{directory}'"
+
+    if title
+      from = Dir.pwd
+      Dir.chdir(directory)
+      File.rename(Dir.glob('*pdf').last, "../#{title}.pdf")
+      Dir.chdir(from)
+    end
+
     Kindai::Util.logger.info "generating pdf done"
   end
 end

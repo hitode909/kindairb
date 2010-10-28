@@ -97,7 +97,7 @@ module Kindai
     end
 
     def generate_pdf
-      Kindai::Util.generate_pdf(full_directory_path)
+      Kindai::Util.generate_pdf(full_directory_path, [@book.author, @book.title].compact.join(' - '))
     end
   end
 end
