@@ -29,7 +29,7 @@ URLの代わりに検索ワードを指定すると，ヒットした本をま�
 
     ruby kindai.rb http://kindai.ndl.go.jp/info:ndljp/pid/922693 --trimming
 
- --pdfオプションで，ダウンロードした画像をまとめてPDFにします．デスクトップにPDFができます．Macのみ対応しています．
+ --pdfオプションで，ダウンロードした画像をまとめてPDFにします．Macのみ対応しています．
 
     ruby kindai.rb http://kindai.ndl.go.jp/info:ndljp/pid/922693 --pdf
 
