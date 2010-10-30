@@ -35,7 +35,8 @@ URLの代わりに検索ワードを指定すると，ヒットした本をま�
 
  --trimming-オプションで，画像を指定した範囲でトリミングします．あらかじめ本の大きさをピクセル単位で調べておいて，余白を取り除くのに使えます．
 
-    ruby kindai.rb http://kindai.ndl.go.jp/info:ndljp/pid/922693 --trimming-x 330 --trimming-y 200 --trimming-width 2800 --trimming-height 2500
+    ruby kindai.rb http://kindai.ndl.go.jp/info:ndljp/pid/922693 \
+                   --trimming-x 330 --trimming-y 200 --trimming-width 2800 --trimming-height 2500
     もしくは
     ruby kindai.rb http://kindai.ndl.go.jp/info:ndljp/pid/922693 -x 330 -y 200 -w 2800 -h 2500
 
