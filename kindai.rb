@@ -18,6 +18,11 @@ parser = OptionParser.new(banner) {|opt|
     Kindai::Util.convert_required
     config[:use_divide] = true
   }
+  opt.on('--trimming', 'divide image into two (deprecated)') {|v|
+    Kindai::Util.logger.warn "--trimming is deprecated. Use --divide."
+    Kindai::Util.convert_required
+    config[:use_divide] = true
+  }
   opt.on('-p', '--pdf', 'enable pdf generating') {|v|
     config[:use_pdf] = true
   }
