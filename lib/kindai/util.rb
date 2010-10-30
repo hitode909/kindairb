@@ -62,10 +62,7 @@ module Kindai::Util
   end
 
   def self.check_file(path)
-    if `which convert`.empty?
-      Kindai::Util.logger.warn 'convert is required to check file.'
-      return true
-    end
+    return true if `which convert`.empty?
 
     stdin, stdout, stderr = Open3.popen3('convert', path, Tempfile.new('dummy').path)
     r = stderr.read

@@ -87,6 +87,10 @@ module Kindai
             next if has_whole_file_at(i)
             Kindai::Util.logger.info "downloading " + [@book.author, @book.title, "koma #{i}"].join(' - ')
             Kindai::Util.download(@book.image_url_at(i), path_at(i))
+            unless Kindai::Util.check_file path_at(i)
+              File.delete path_at(i)
+              raise 'failed to download'
+            end
           end
           return if @test_mode
         rescue Interrupt => e
