@@ -14,29 +14,29 @@ parser = OptionParser.new(banner) {|opt|
   opt.on('-o OUTPUT_DIRECTORY', '--output', 'specify output directory') {|v|
     config[:output_directory] = v
   }
-  opt.on('-t', '--trimming', 'enable trimming using ImageMagick') {|v|
-    Kindai::Util.check_trim
-    config[:use_trim] = true
+  opt.on('-d', '--divide', 'divide image into two') {|v|
+    Kindai::Util.convert_required
+    config[:use_divide] = true
   }
   opt.on('-p', '--pdf', 'enable pdf generating') {|v|
     config[:use_pdf] = true
   }
-  opt.on('-d', '--debug', 'enable debug mode') {|v|
+  opt.on('--debug', 'enable debug mode') {|v|
     config[:debug_mode] = true
   }
-  opt.on('-x X', '--trimming-x', 'offset x for trimming download') {|v|
+  opt.on('-x X', '--trimming-x', 'left margin for trimming download') {|v|
     config[:trimming_x] = v.to_i
   }
-  opt.on('-y Y', '--trimming-y', 'offset y for trimming download') {|v|
+  opt.on('-y Y', '--trimming-y', 'top margin for trimming download') {|v|
     config[:trimming_y] = v.to_i
   }
-  opt.on('-w WIDTH', '--trimming-w', 'width for trimming download') {|v|
+  opt.on('-w WIDTH', '--trimming-width', 'width for trimming download') {|v|
     config[:trimming_w] = v.to_i
   }
-  opt.on('-h HEIGHT', '--trimming-h', 'width for trimming download') {|v|
+  opt.on('-h HEIGHT', '--trimming-height', 'width for trimming download') {|v|
     config[:trimming_h] = v.to_i
   }
-  opt.on('-t', '--test', 'enable test mode') {|v|
+  opt.on('-t', '--test', 'Download the first page only') {|v|
     config[:test_mode] = v
   }
   opt.parse!(ARGV)

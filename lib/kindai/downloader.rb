@@ -21,9 +21,9 @@ module Kindai
       generate_pdf if @use_pdf
     end
 
-    def use_trim
-      Kindai::Util.logger.info "trimming enabled"
-      @use_trim = true
+    def use_divide
+      Kindai::Util.logger.info "dividing enabled"
+      @use_divide = true
     end
 
     def use_pdf
@@ -74,15 +74,15 @@ module Kindai
             File.delete(Kindai::Util.append_suffix(path_at(i), '1')) if File.exists?(Kindai::Util.append_suffix(path_at(i), '1'))
           end
           # XXX
-          if @use_trim
-            next if has_trimmed_file_at(i)
+          if @use_divide
+            next if has_divided_file_at(i)
             Kindai::Util.logger.info "downloading " + [@book.author, @book.title, "koma #{i}"].join(' - ')
             Kindai::Util.download(@book.image_url_at(i), path_at(i)) unless has_whole_file_at(i)
             unless Kindai::Util.check_file path_at(i)
               File.delete path_at(i)
               raise 'failed to download'
             end
-            Kindai::Util.trim(path_at(i)) if @use_trim
+            Kindai::Util.divide(path_at(i)) if @use_divide
           else
             next if has_whole_file_at(i)
             Kindai::Util.logger.info "downloading " + [@book.author, @book.title, "koma #{i}"].join(' - ')
@@ -115,7 +115,7 @@ module Kindai
       File.size?(path_at(i))
     end
 
-    def has_trimmed_file_at(i)
+    def has_divided_file_at(i)
       File.size?(Kindai::Util.append_suffix(path_at(i), '0')) && File.size?(Kindai::Util.append_suffix(path_at(i), '1'))
     end
 

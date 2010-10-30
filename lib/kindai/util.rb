@@ -57,8 +57,8 @@ module Kindai::Util
     params.each_pair.map{ |k, v| [URI.escape(k.to_s), URI.escape(v.to_s)].join('=')}.join('&')
   end
 
-  def self.check_trim
-    raise "convert is required to trim" if `which convert`.empty?
+  def self.convert_required
+    raise "convert is required" if `which convert`.empty?
   end
 
   def self.check_file(path)
@@ -69,10 +69,10 @@ module Kindai::Util
     r.empty?
   end
 
-  def self.trim(path)
+  def self.divide(path)
     raise "#{path} not exist" unless File.exists? path
 
-    Kindai::Util.logger.info "trimming #{path}"
+    Kindai::Util.logger.info "dividing #{path}"
 
     Kindai::Util.logger.debug "convert -fuzz 25% -trim '#{path}' '#{path}'"
     system "convert -fuzz 25% -trim '#{path}' '#{path}'"

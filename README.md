@@ -25,13 +25,23 @@ URLの代わりに検索ワードを指定すると，ヒットした本をま�
 
     ruby kindai.rb http://kindai.ndl.go.jp/info:ndljp/pid/922693 --output ~/Documents/
 
- --trimmingオプションで，ダウンロードした画像を左右のページにトリミングします．ImageMagickが必要です．
+ --divideオプションで，ダウンロードした画像を左右のページにトリミングします．ImageMagickが必要です．
 
-    ruby kindai.rb http://kindai.ndl.go.jp/info:ndljp/pid/922693 --trimming
+    ruby kindai.rb http://kindai.ndl.go.jp/info:ndljp/pid/922693 --divide
 
  --pdfオプションで，ダウンロードした画像をまとめてPDFにします．Macのみ対応しています．
 
     ruby kindai.rb http://kindai.ndl.go.jp/info:ndljp/pid/922693 --pdf
+
+ --trimming-オプションで，画像を指定した範囲でトリミングします．あらかじめ本の大きさをピクセル単位で調べておいて，余白を取り除くのに使えます．
+
+    ruby kindai.rb http://kindai.ndl.go.jp/info:ndljp/pid/922693 --trimming-x 330 --trimming-y 200 --trimming-width 2800 --trimming-height 2500
+    もしくは
+    ruby kindai.rb http://kindai.ndl.go.jp/info:ndljp/pid/922693 -x 330 -y 200 -w 2800 -h 2500
+
+ --testオプションで，最初の見開きだけをダウンロードします．これは，--trimmingオプションの引数を調整するのに便利です．
+
+    ruby kindai.rb http://kindai.ndl.go.jp/info:ndljp/pid/922693 --test
 
 動作環境
 --------
@@ -39,7 +49,7 @@ URLの代わりに検索ワードを指定すると，ヒットした本をま�
 * Ruby が必要です．
 * Nokogiri が必要なので，RubyGems でインストールしてください．
 * Gemfile を書いてあるので，bundler が入ってる環境では bundle install コマンドを実行するだけで必要な Gem が入ります．
-* トリミングする場合は，ImageMagickが必要です．
+* 左右のページにトリミングする場合は，ImageMagickが必要です．ImageMagickがあるとき，画像が正しくダウンロードできたかどうかチェックするので，あると便利です．
 [ImageMagick: Convert, Edit, and Compose Images](http://www.imagemagick.org/script/index.php)
 
 その他
