@@ -6,6 +6,14 @@ module Kindai::Interface
     downloader.output_directory = config[:output_directory] if config[:output_directory]
     downloader.use_trim if config[:use_trim]
     downloader.use_pdf if config[:use_pdf]
+    downloader.test_mode if config[:test_mode]
+    book.set_trimming(
+      :x => config[:trimming_x] || 0,
+      :y => config[:trimming_y] || 0,
+      :w => config[:trimming_w] || 5000,
+      :h => config[:trimming_h] || 5000,
+      ) if config[:trimming_x] || config[:trimming_y] || config[:trimming_w] || config[:trimming_h]
+    downloader
     Kindai::Util.logger.info "download #{book.title}(#{book.page} pages) to #{downloader.full_directory_path}"
     downloader.download
   end

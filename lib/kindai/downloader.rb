@@ -14,6 +14,10 @@ module Kindai
     def download
       create_directory
       download_images
+      if @test_mode
+        Kindai::Util.logger.info "test done"
+        return
+      end
       generate_pdf if @use_pdf
     end
 
@@ -25,6 +29,11 @@ module Kindai
     def use_pdf
       Kindai::Util.logger.info "pdf output enabled"
       @use_pdf = true
+    end
+
+    def test_mode
+      Kindai::Util.logger.info "test mode enabled"
+      @test_mode = true
     end
 
     def directory_path
@@ -59,6 +68,11 @@ module Kindai
       (1..(1/0.0)).each { |i|
         failed_count = 0
         begin
+          if @test_mode
+            File.delete(path_at(i)) if File.exists?(path_at(i))
+            File.delete(Kindai::Util.append_suffix(path_at(i), '0')) if File.exists?(Kindai::Util.append_suffix(path_at(i), '0'))
+            File.delete(Kindai::Util.append_suffix(path_at(i), '1')) if File.exists?(Kindai::Util.append_suffix(path_at(i), '1'))
+          end
           # XXX
           if @use_trim
             next if has_trimmed_file_at(i)
@@ -74,6 +88,7 @@ module Kindai
             Kindai::Util.logger.info "downloading " + [@book.author, @book.title, "koma #{i}"].join(' - ')
             Kindai::Util.download(@book.image_url_at(i), path_at(i))
           end
+          return if @test_mode
         rescue Interrupt => e
           Kindai::Util.logger.error "#{e.class}: #{e.message}"
           exit 1

@@ -10,6 +10,14 @@ module Kindai
       me
     end
 
+    def set_trimming(arg)
+      [:x, :y, :w, :h].each{|key|
+        raise "#{key} is required" unless arg.has_key? key
+      }
+      @trimming = arg
+      Kindai::Util.logger.info "trimming download enabled #{arg.inspect}"
+    end
+
     # attributes
     def title
       metadata['タイトル']
@@ -39,7 +47,9 @@ module Kindai
           page_url = URI.parse(permalink_url) + permalink_page.at('frame[name="W_BODY"]')['src']
 
           page_file = open(page_url.to_s)
-          page_file.base_uri.to_s + '&vs=5000,5000,0,0,0,0,0,0'
+          url = page_file.base_uri.to_s + '&vs=5000,5000,0,0,0,0,0,0'
+          url += "&ref=" + [@trimming[:x], @trimming[:y], @trimming[:w], @trimming[:h], 5000, 5000, 0, 0].join(',') if @trimming
+          url
         end
     end
 
