@@ -52,6 +52,15 @@ module Kindai
       File.expand_path(directory_path)
     end
 
+    def retry_count
+      @retry_count || 3
+    end
+
+    def retry_count=(x)
+      Kindai::Util.logger.info "retry_count = #{x}"
+      @retry_count = x
+    end
+
     protected
 
     # TODO: output directory
@@ -64,7 +73,6 @@ module Kindai
     end
 
     def download_images
-      threshold = 3
       (1..(1/0.0)).each { |i|
         failed_count = 0
         begin
@@ -98,8 +106,8 @@ module Kindai
           exit 1
         rescue Exception, TimeoutError => e
           failed_count += 1
-          Kindai::Util.logger.warn "failed (#{failed_count}/#{threshold}) #{e.class}: #{e.message}"
-          if failed_count >= threshold
+          Kindai::Util.logger.warn "failed (#{failed_count}/#{retry_count}) #{e.class}: #{e.message}"
+          if failed_count >= retry_count
             Kindai::Util.logger.info "done"
             return
           else

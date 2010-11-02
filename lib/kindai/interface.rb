@@ -7,6 +7,7 @@ module Kindai::Interface
     downloader.use_divide if config[:use_divide]
     downloader.use_pdf if config[:use_pdf]
     downloader.test_mode if config[:test_mode]
+    downloader.retry_count = config[:retry_count] if config[:retry_count]
     book.set_trimming(
       :x => config[:trimming_x] || 0,
       :y => config[:trimming_y] || 0,

@@ -44,6 +44,9 @@ parser = OptionParser.new(banner) {|opt|
   opt.on('-t', '--test', 'Download the first page only') {|v|
     config[:test_mode] = v
   }
+  opt.on('--retry TIMES', 'retry times (default is 3)') {|v|
+    config[:retry_count] = v.to_i
+  }
   opt.parse!(ARGV)
 }
 
