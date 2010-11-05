@@ -71,6 +71,26 @@ module Kindai::Util
 
   def self.divide(path)
     raise "#{path} not exist" unless File.exists? path
+    Kindai::Util.logger.info "dividing #{path}"
+
+    Kindai::Util.logger.debug "convert -fuzz 25% -trim '#{path}' '#{path}'"
+    system "convert -fuzz 25% -trim '#{path}' '#{path}'"
+
+    info = `identify '#{path}'`
+    image_width, image_height = *info.scan(/(\d+)x(\d+)/).first.map(&:to_i)
+    Kindai::Util.logger.debug [image_width, image_height]
+
+    Kindai::Util.logger.debug "convert -crop  '#{path}' '#{path}'"
+    system "convert -crop #{image_height*0.75}x#{image_height}+#{image_width - image_height*0.75}+0 '#{path}' '#{append_suffix(path, '0')}'"
+    system "convert -crop #{image_height*0.75}x#{image_height}+0+0 '#{path}' '#{append_suffix(path, '1')}'"
+
+    File.delete path
+
+    [append_suffix(path, '0'), append_suffix(path, '1')]
+  end
+
+  def self._divide(path)
+    raise "#{path} not exist" unless File.exists? path
 
     Kindai::Util.logger.info "dividing #{path}"
 
@@ -84,7 +104,7 @@ module Kindai::Util
     File.rename append_suffix(path, '1'), append_suffix(path, '0')
     File.rename append_suffix(path, 'tmp'), append_suffix(path, '1')
     File.delete path
-    return [append_suffix(path, '0'), append_suffix(path, '1')]
+    [append_suffix(path, '0'), append_suffix(path, '1')]
   end
 
   def self.append_suffix(path, suffix)
