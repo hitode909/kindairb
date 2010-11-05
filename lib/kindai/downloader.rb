@@ -61,6 +61,15 @@ module Kindai
       @retry_count = x
     end
 
+    def resize_option
+      @resize_option
+    end
+
+    def resize_option=(x)
+      Kindai::Util.logger.info "resize_option = #{x}"
+      @resize_option = x
+    end
+
     protected
 
     # TODO: output directory
@@ -85,12 +94,18 @@ module Kindai
           if @use_divide
             next if has_divided_file_at(i)
             Kindai::Util.logger.info "downloading " + [@book.author, @book.title, "koma #{i}"].join(' - ')
-            Kindai::Util.download(@book.image_url_at(i), path_at(i)) unless has_whole_file_at(i)
+            Kindai::Util.rich_download(@book.image_url_at(i), path_at(i)) unless has_whole_file_at(i)
             unless Kindai::Util.check_file path_at(i)
               File.delete path_at(i)
               raise 'failed to download'
             end
-            Kindai::Util.divide(path_at(i)) if @use_divide
+            files = Kindai::Util.divide(path_at(i))
+            if @resize_option
+              files.each{|path|
+                Kindai::Util.logger.info "resize #{path}"
+                system "convert -geometry #{@resize_option} '#{path}' '#{path}'"
+              }
+            end
           else
             next if has_whole_file_at(i)
             Kindai::Util.logger.info "downloading " + [@book.author, @book.title, "koma #{i}"].join(' - ')
@@ -98,6 +113,12 @@ module Kindai
             unless Kindai::Util.check_file path_at(i)
               File.delete path_at(i)
               raise 'failed to download'
+            end
+            if @resize_option
+              files.each{|path|
+                Kindai::Util.logger.info "resize #{path_at(i)}"
+                system "convert -geometry #{@resize_option} '#{path_at(i)}' '#{path_at(i)}'"
+              }
             end
           end
           return if @test_mode

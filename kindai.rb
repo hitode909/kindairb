@@ -47,6 +47,9 @@ parser = OptionParser.new(banner) {|opt|
   opt.on('--retry TIMES', 'retry times (default is 3)') {|v|
     config[:retry_count] = v.to_i
   }
+  opt.on('--resize GEOMETRY', 'convert -geometry GEOMETRY') {|v|
+    config[:resize_option] = v
+  }
   opt.parse!(ARGV)
 }
 

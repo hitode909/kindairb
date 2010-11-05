@@ -84,6 +84,7 @@ module Kindai::Util
     File.rename append_suffix(path, '1'), append_suffix(path, '0')
     File.rename append_suffix(path, 'tmp'), append_suffix(path, '1')
     File.delete path
+    return [append_suffix(path, '0'), append_suffix(path, '1')]
   end
 
   def self.append_suffix(path, suffix)
