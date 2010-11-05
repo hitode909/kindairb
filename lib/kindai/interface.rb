@@ -6,6 +6,7 @@ module Kindai::Interface
     downloader.output_directory = config[:output_directory] if config[:output_directory]
     downloader.use_divide if config[:use_divide]
     downloader.use_pdf if config[:use_pdf]
+    downloader.use_zip if config[:use_zip]
     downloader.test_mode if config[:test_mode]
     downloader.retry_count = config[:retry_count] if config[:retry_count]
     downloader.resize_option = config[:resize_option] if config[:resize_option]

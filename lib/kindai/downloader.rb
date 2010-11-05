@@ -19,6 +19,7 @@ module Kindai
         return
       end
       generate_pdf if @use_pdf
+      generate_zip if @use_zip
     end
 
     def use_divide
@@ -29,6 +30,11 @@ module Kindai
     def use_pdf
       Kindai::Util.logger.info "pdf output enabled"
       @use_pdf = true
+    end
+
+    def use_zip
+      Kindai::Util.logger.info "zip output enabled"
+      @use_zip = true
     end
 
     def test_mode
@@ -150,6 +156,10 @@ module Kindai
 
     def generate_pdf
       Kindai::Util.generate_pdf(full_directory_path, [@book.author, @book.title].compact.join(' - '))
+    end
+
+    def generate_zip
+      Kindai::Util.generate_zip(full_directory_path)
     end
   end
 end

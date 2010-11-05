@@ -110,4 +110,20 @@ module Kindai::Util
 
     Kindai::Util.logger.info "generating pdf done"
   end
+
+  def self.generate_zip(directory)
+    directory = File.expand_path(directory)
+    raise "#{directory} is not directory." unless File.directory? directory
+
+    from = Dir.pwd
+    Dir.chdir(directory)
+
+    Kindai::Util.logger.info "generating zip"
+    Kindai::Util.logger.debug "zip -q -r '#{Time.now.to_i}.zip' *jpg"
+    system "zip -q -r '#{Time.now.to_i}.zip' *jpg"
+    title = File.basename(directory)
+    File.rename(Dir.glob('*zip').last, "../#{title}.zip")
+
+    Dir.chdir(from)
+  end
 end

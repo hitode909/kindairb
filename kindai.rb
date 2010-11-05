@@ -26,6 +26,9 @@ parser = OptionParser.new(banner) {|opt|
   opt.on('-p', '--pdf', 'enable pdf generating') {|v|
     config[:use_pdf] = true
   }
+  opt.on('--zip', 'enable zip generating') {|v|
+    config[:use_zip] = true
+  }
   opt.on('--debug', 'enable debug mode') {|v|
     config[:debug_mode] = true
   }
