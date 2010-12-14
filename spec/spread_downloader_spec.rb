@@ -39,7 +39,6 @@ describe Kindai::SpreadDownloader do
     @downloader.delete.should be_true
     Dir.delete book_path
 
-
     @downloader.has_file?.should be_false
     @downloader.delete.should be_false
   end
