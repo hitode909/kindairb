@@ -26,12 +26,7 @@ module Kindai
     end
 
     def delete
-      if self.has_file?
-        File.delete(self.spread_path)
-        return true
-      end
-
-      return false
+      return File.delete(self.spread_path) && true rescue false
     end
 
     def has_file?

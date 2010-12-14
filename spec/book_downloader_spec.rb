@@ -25,4 +25,20 @@ describe Kindai::BookDownloader do
     @downloader.book_path.should == "/path/to/library/正義熱血社 - 正義の叫"
   end
 
+  it 'can download book' do
+    base_path = File.join(ENV['TMPDIR'] || ENV['TMP'] || ENV['TEMP'] || '/tmp', rand.to_s)
+    Dir.mkdir(base_path)
+    @downloader.base_path = base_path
+
+    @downloader.has_file?.should be_false
+    @downloader.download.should be_true
+    @downloader.has_file?.should be_true
+    @downloader.download.should be_false
+
+    @downloader.delete.should be_true
+    @downloader.has_file?.should be_false
+    @downloader.delete.should be_false
+  end
+
+
 end
