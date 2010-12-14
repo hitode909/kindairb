@@ -10,7 +10,7 @@ module Kindai
       me = self.new
       me.book = book
       me.retry_count = 0
-      me.base_path = Pathname.new(ENV["HOME"]).to_s
+      me.base_path = Dir.pwd
       me
     end
 
