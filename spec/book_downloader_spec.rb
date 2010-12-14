@@ -38,6 +38,8 @@ describe Kindai::BookDownloader do
     @downloader.delete.should be_true
     @downloader.has_file?.should be_false
     @downloader.delete.should be_false
+
+    Dir.delete(base_path)
   end
 
 
