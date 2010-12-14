@@ -152,12 +152,14 @@ module Kindai::Util
     return uri.read unless rich
 
     total = nil
+    from = Time.now
     uri.read(
       :content_length_proc => proc{|_total|
         total = _total
       },
       :progress_proc => proc{|now|
-        if rand > 0.5
+        if Time.now - from > 0.2
+          from = Time.now
           print "%3d%% #{now}/#{total}\r" % (now/total.to_f*100)
           $stdout.flush
         end
