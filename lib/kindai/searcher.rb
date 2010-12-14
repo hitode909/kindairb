@@ -1,36 +1,47 @@
 # -*- coding: utf-8 -*-
 module Kindai
-  module Searcher
+  class Searcher
+    include Enumerable
+    attr_accessor :keyword
     def self.search keyword
-      total = total_of(keyword)
-      Kindai::Util.logger.info "keyword: #{keyword}"
-      Kindai::Util.logger.info "total:   #{total}"
-      current = 0
+      Kindai::Util.logger.debug "keyword: #{keyword}"
+      me = self.new
+      me.keyword = keyword
+      me
+    end
+
+    def length
+      @length ||= total_of(@keyword)
+    end
+
+    def each
       (0..(1/0.0)).each{ |page|
         Kindai::Util.logger.debug "page #{page}"
-        urls = result_for(keyword, page)
-        return if urls.empty?
-        urls.each{ |url|
-          current += 1
-          yield url, current, total
+        uris = result_for(@keyword, page)
+        return if uris.empty?
+        uris.each{ |uri|
+          yield Kindai::Book.new_from_permalink(uri)
         }
       }
     end
 
     protected
-    def self.total_of(keyword)
-      page = Nokogiri open(url_for(keyword))
-      page.at('totalresults').text.to_i
+    def total_of(keyword)
+      page = Nokogiri(Kindai::Util.fetch_uri(uri_for(keyword)))
+      total = page.at('.//opensearch:totalResults', {"opensearch"=>"http://a9.com/-/spec/opensearchrss/1.0/"} ).content.to_i
+
+      Kindai::Util.logger.debug "total: #{total}"
+      total
     end
 
-    def self.result_for keyword, page = 0
-      page = Nokogiri open(url_for(keyword, page))
+    def result_for keyword, page = 0
+      page = Nokogiri Kindai::Util.fetch_uri(uri_for(keyword, page))
       page.search('item').map{ |item|
-        item.at('link').next.text
+        item.at('link').content
       }
     end
 
-    def self.url_for keyword, page = 0
+    def uri_for keyword, page = 0
       count = 10
       params = { :any => keyword, :dpid => 'kindai', :idx => page * count + 1, :cnt => count}
       root = URI.parse("http://api.porta.ndl.go.jp/servicedp/opensearch")
