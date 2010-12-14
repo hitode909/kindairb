@@ -153,4 +153,9 @@ module Kindai::Util
 
     Dir.chdir(from)
   end
+
+  def self.fetch_uri(uri)
+    uri = URI.parse(uri) unless uri.kind_of? URI
+    uri.read
+  end
 end

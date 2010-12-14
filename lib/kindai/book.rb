@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 module Kindai
   class Book
-    attr_accessor :permalink_url
+    attr_accessor :permalink_uri
 
     # ----- constructor -----
-    def self.new_from_permalink(permalink_url)
-      raise "not info:ndljp" unless permalink_url.match(/info\:ndljp/)
+    def self.new_from_permalink(permalink_uri)
+      raise "not info:ndljp" unless permalink_uri.match(/info\:ndljp/)
       me = new
-      me.permalink_url = permalink_url
+      me.permalink_uri = permalink_uri
       me
     end
 
@@ -39,23 +39,17 @@ module Kindai
 
     # ----- page -----
 
-    def image_url_at(i)
-      image = image_page_at(i).at("img#imMain")
-      raise "image not found" unless image
-      image['src']
-    end
-
-    # ----- url -----
-    def base_page_url
-      @image_page_url ||=
+    # ----- uri -----
+    def base_uri
+      @base_uri ||=
         begin
           Kindai::Util.logger.debug "fetch permalink page"
-          page_url = URI.parse(permalink_url) + permalink_page.at('frame[name="W_BODY"]')['src']
+          page_uri = URI.parse(permalink_uri) + permalink_page.at('frame[name="W_BODY"]')['src']
 
-          page_file = open(page_url.to_s)
-          url = page_file.base_uri.to_s + '&vs=5000,5000,0,0,0,0,0,0'
-#           url += "&ref=" + [@trimming[:x], @trimming[:y], @trimming[:w], @trimming[:h], 5000, 5000, 0, 0].join(',') if @trimming
-          url
+          page_file = Kindai::Util.fetch_uri page_uri.to_s
+          uri = page_file.base_uri.to_s + '&vs=10000,10000,0,0,0,0,0,0'
+#           uri += "&ref=" + [@trimming[:x], @trimming[:y], @trimming[:w], @trimming[:h], 5000, 5000, 0, 0].join(',') if @trimming
+          uri
         end
     end
 
@@ -64,9 +58,9 @@ module Kindai
     protected
 
     def image_page_at(i)
-      page_url = base_page_url
-      page_url.gsub!(/koma=(\d+)/) { "koma=#{i}" }
-      Nokogiri::HTML open(page_url)
+      page_uri = base_page_uri
+      page_uri.gsub!(/koma=(\d+)/) { "koma=#{i}" }
+      Nokogiri::HTML Kindai::Util.fetch_uri page_uri
     end
 
     def metadata
@@ -83,18 +77,18 @@ module Kindai
         end
     end
 
-    # permalink_url = @permalink_url
+    # permalink_uri = @permalink_uri
 
     def permalink_page
       @permalink_page ||=
         begin
           Kindai::Util.logger.debug "fetch permalink page"
-          page = open(permalink_url) rescue open(URI.escape(permalink_url))
+          page = Kindai::Util.fetch_uri permalink_uri rescue Kindai::Util.fetch_uri URI.escape(permalink_uri)
           Nokogiri page
         end
     end
 
-    def detail_url
+    def detail_uri
       root = URI.parse('http://kindai.ndl.go.jp/BIBibDetail.php')
       params = { }
       control_page.search('input').each{ |input|
@@ -108,20 +102,20 @@ module Kindai
       @detail_page ||=
         begin
           Kindai::Util.logger.debug "fetch detail page"
-          page = open(detail_url) rescue open(URI.escape(detail_url))
+          page = Kindai::Util.fetch_uri detail_uri rescue Kindai::Util.fetch_uri URI.escape(detail_uri)
           Nokogiri page
         end
     end
 
-    def control_url
-      URI.parse(permalink_url) + permalink_page.at('frame[name="W_CONTROL"]')['src']
+    def control_uri
+      URI.parse(permalink_uri) + permalink_page.at('frame[name="W_CONTROL"]')['src']
     end
 
     def control_page
       @control_page ||=
         begin
           Kindai::Util.logger.debug "fetch permalink page"
-          Nokogiri open(control_url)
+          Nokogiri Kindai::Util.fetch_uri control_uri
         end
     end
 

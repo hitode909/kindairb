@@ -22,4 +22,9 @@ describe Kindai::Book do
     @book.spread_at(1).should be_a_kind_of Kindai::Spread
   end
 
+
+  it 'has base_uri' do
+    @book.base_uri.should == "http://kindai.da.ndl.go.jp/scrpt/ndlimageviewer-rgc.aspx?pid=info%3Andljp%2Fpid%2F922693&jp=42016454&vol=10010&koma=1&vs=10000,10000,0,0,0,0,0,0"
+  end
+
 end
