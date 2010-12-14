@@ -21,7 +21,7 @@ describe Kindai::BookDownloader do
     @downloader.base_path = "/path/to/library"
     @downloader.book_path.should == "/path/to/library/正義熱血社 - 正義の叫"
 
-    @downloader.book_path = "/path/to/library/"
+    @downloader.base_path = "/path/to/library/"
     @downloader.book_path.should == "/path/to/library/正義熱血社 - 正義の叫"
   end
 

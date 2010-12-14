@@ -2,11 +2,10 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'rspec'
 require 'kindai'
-# Kindai::Util.debug_mode
-
 
 module Kindai::Util
-  def self.fetch_uri(uri)
+  def self.fetch_uri(uri, rich = false)
+    logger.debug "fetch uri #{uri}"
     uri = URI.parse(uri) unless uri.kind_of? URI
 
     cache_directory = File.join(File.dirname(__FILE__), '..', 'spec', 'cache')
@@ -14,8 +13,9 @@ module Kindai::Util
 
     cache_file = File.join(cache_directory, Digest::SHA1.hexdigest(uri.to_s))
     unless File.exists? cache_file
+      logger.debug "fetch cache #{uri}"
       open(cache_file, 'w') {|f|
-        f.puts Marshal.dump(uri.read)
+        f.write Marshal.dump(uri.read)
       }
     end
 

@@ -34,20 +34,13 @@ module Kindai::Util
     raise error
   end
 
-  def self.rich_download(url, file)
+  def self.rich_download(uri, file)
     total = nil
+    uri = URI.parse(uri) unless uri.kind_of? URI
+
+    got = fetch_uri(uri, true)
     open(file, 'w') {|local|
-      got = open(url,
-        :content_length_proc => proc{|_total|
-          total = _total
-        },
-        :progress_proc => proc{ |now|
-          print "%3d%% #{now}/#{total}\r" % (now/total.to_f*100)
-          $stdout.flush
-        }
-        ) {|remote|
-        local.write(remote.read)
-      }
+      local.write(got)
     }
   rescue Exception, TimeoutError => error
     if File.exists?(file)
@@ -153,9 +146,22 @@ module Kindai::Util
     Dir.chdir(from)
   end
 
-  def self.fetch_uri(uri)
+  def self.fetch_uri(uri, rich = false)
     uri = URI.parse(uri) unless uri.kind_of? URI
-    uri.read
+
+    return uri.read unless rich
+
+    total = nil
+    uri.read(
+      :content_length_proc => proc{|_total|
+        total = _total
+      },
+      :progress_proc => proc{|now|
+        if rand > 0.5
+          print "%3d%% #{now}/#{total}\r" % (now/total.to_f*100)
+          $stdout.flush
+        end
+      })
   end
 
 end

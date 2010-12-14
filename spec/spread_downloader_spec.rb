@@ -26,10 +26,23 @@ describe Kindai::SpreadDownloader do
     @downloader.spread_path.should == "/path/to/book/011.jpg"
   end
 
-  # it 'can download spread' do
-  #   tempdir = ENV['TMPDIR'] || ENV['TMP'] || ENV['TEMP'] || '/tmp'
-  #   @downloader.download_to_path(tempdir)
-  # end
+  it 'can download spread' do
+    book_path = File.join(ENV['TMPDIR'] || ENV['TMP'] || ENV['TEMP'] || '/tmp', rand.to_s)
+    Dir.mkdir(book_path)
+    @downloader.book_path = book_path
+
+    @downloader.has_file?.should be_false
+    @downloader.download.should be_true
+    @downloader.has_file?.should be_true
+    @downloader.download.should be_false
+
+    @downloader.delete.should be_true
+    Dir.delete book_path
+
+
+    @downloader.has_file?.should be_false
+    @downloader.delete.should be_false
+  end
 
 
 end

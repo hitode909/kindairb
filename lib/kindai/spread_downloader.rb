@@ -15,14 +15,27 @@ module Kindai
     end
 
     def download
-      return if self.has_file?
-
+      return false if self.has_file?
       self.download_spread
+      return true
     end
 
     def spread_path
       path = File.join self.book_path, "%03d.jpg" % self.spread.spread_number
       File.expand_path path
+    end
+
+    def delete
+      if self.has_file?
+        File.delete(self.spread_path)
+        return true
+      end
+
+      return false
+    end
+
+    def has_file?
+      File.size? self.spread_path
     end
 
     protected
@@ -31,24 +44,20 @@ module Kindai
       failed_count = 0
 
       begin
-        Kindai::Util.logger.info "downloading " + [@book.author, @book.title, "koma #{i}"].join(' - ')
-        Kindai::Util.rich_download(self.spread_path, spread.image_uri)
+        Kindai::Util.logger.info "downloading " + [self.spread.book.author, self.spread.book.title, "spread", self.spread.spread_number].join(' - ')
+        Kindai::Util.rich_download(spread.image_uri, self.spread_path)
       rescue Interrupt => err
         Kindai::Util.logger.error "#{err.class}: #{err.message}"
         exit 1
       rescue StandardError, TimeoutError => err
-        failed_count += 1
-        Kindai::Util.logger.warn "failed (#{failed_count}/#{self.retry_count}) #{e.class}: #{e.message}"
-
+        Kindai::Util.logger.warn "failed (#{failed_count}/#{self.retry_count}) #{err.class}: #{err.message}"
         raise err if failed_count == self.retry_count
 
         Kindai::Util.logger.info "sleep and retry"
+        failed_count += 1
         sleep 3
       end
     end
 
-    def has_file?
-      File.size? self.spread_path
-    end
   end
 end
