@@ -3,7 +3,6 @@ require 'open3'
 require 'tempfile'
 require 'digest/sha1'
 
-
 module Kindai::Util
   def self.logger
     @logger ||= Logger.new(STDOUT)
@@ -158,4 +157,5 @@ module Kindai::Util
     uri = URI.parse(uri) unless uri.kind_of? URI
     uri.read
   end
+
 end

@@ -24,8 +24,17 @@ module Kindai
       NKF.nkf("-m0Z1Ww", metadata['形態'].match(/^(.*)(?:ｐ)/)[1]).to_i
     end
 
+    def total_spread
+      self.first_spread.page.search('select#dlPages option').length
+    end
+
     # ----- spread -----
+    def first_spread
+      Kindai::Spread.new_from_book_and_spread_number(self, 1)
+    end
+
     def spread_at(spread_number)
+      return nil unless (1..self.total_spread).include? spread_number
       Kindai::Spread.new_from_book_and_spread_number(self, spread_number)
     end
 

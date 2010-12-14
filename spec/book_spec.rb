@@ -10,8 +10,12 @@ describe Kindai::Book do
     @book.title.should == '正義の叫'
   end
 
-  it 'has total_page' do
+  it 'has total page' do
     @book.total_page.should == 31
+  end
+
+  it 'has total sprea' do
+    @book.total_spread.should == 20
   end
 
   it 'has author' do
@@ -22,6 +26,16 @@ describe Kindai::Book do
     @book.spread_at(1).should be_a_kind_of Kindai::Spread
   end
 
+  it 'has first spread' do
+    @book.first_spread.uri.should == @book.spread_at(1).uri
+  end
+
+  it 'has spread with limit' do
+    @book.spread_at(0).should be_nil
+    @book.spread_at(1).should be_a_kind_of Kindai::Spread
+    @book.spread_at(@book.total_spread).should be_a_kind_of Kindai::Spread
+    @book.spread_at(@book.total_spread + 10).should be_nil
+  end
 
   it 'has base_uri' do
     @book.base_uri.should == "http://kindai.da.ndl.go.jp/scrpt/ndlimageviewer-rgc.aspx?pid=info%3Andljp%2Fpid%2F922693&jp=42016454&vol=10010&koma=1&vs=10000,10000,0,0,0,0,0,0"

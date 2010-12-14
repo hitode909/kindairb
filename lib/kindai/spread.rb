@@ -29,7 +29,6 @@ module Kindai
     def local_file_path
     end
 
-    protected
     def page
       @page ||= Nokogiri Kindai::Util.fetch_uri self.uri
     end
