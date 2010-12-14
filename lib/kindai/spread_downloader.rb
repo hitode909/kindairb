@@ -41,6 +41,10 @@ module Kindai
       begin
         Kindai::Util.logger.info "downloading " + [self.spread.book.author, self.spread.book.title, "spread #{self.spread.spread_number}"].join(' - ')
         Kindai::Util.rich_download(spread.image_uri, self.spread_path)
+        if system "identify '#{self.spread_path}'" != 0
+          raise "image seems broken"
+          self.delete
+        end
       rescue Interrupt => err
         Kindai::Util.logger.error "#{err.class}: #{err.message}"
         exit 1
