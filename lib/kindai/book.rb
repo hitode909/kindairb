@@ -3,6 +3,7 @@ module Kindai
   class Book
     attr_accessor :permalink_url
 
+    # ----- constructor -----
     def self.new_from_permalink(permalink_url)
       raise "not info:ndljp" unless permalink_url.match(/info\:ndljp/)
       me = new
@@ -10,15 +11,7 @@ module Kindai
       me
     end
 
-    def set_trimming(arg)
-      [:x, :y, :w, :h].each{|key|
-        raise "#{key} is required" unless arg.has_key? key
-      }
-      @trimming = arg
-      Kindai::Util.logger.info "trimming download enabled #{arg.inspect}"
-    end
-
-    # attributes
+    # ----- metadata -----
     def title
       metadata['タイトル']
     end
@@ -27,11 +20,24 @@ module Kindai
       metadata['著者標目']
     end
 
-    def page
-      NKF.nkf("-m0Z1", metadata['形態'].scan(/^(.*)(?:ｐ)/).flatten.first).to_i
-    rescue
-      metadata['形態'].scan(/^(.*)(?:ｐ)/).flatten.first
+    def total_page
+      NKF.nkf("-m0Z1Ww", metadata['形態'].match(/^(.*)(?:ｐ)/)[1]).to_i
     end
+
+    # ----- spread -----
+    def spread_at(spread_number)
+      Kindai::Spread.new_from_book_and_spread_number(self, spread_number)
+    end
+
+    def each_spread
+      (1..(1/0.0)).each{|spread_number|
+        spread = spread_at(spread_number)
+        break unless spread.exists?
+        yield spread
+      }
+    end
+
+    # ----- page -----
 
     def image_url_at(i)
       image = image_page_at(i).at("img#imMain")
@@ -39,7 +45,7 @@ module Kindai
       image['src']
     end
 
-    protected
+    # ----- url -----
     def base_page_url
       @image_page_url ||=
         begin
@@ -48,10 +54,14 @@ module Kindai
 
           page_file = open(page_url.to_s)
           url = page_file.base_uri.to_s + '&vs=5000,5000,0,0,0,0,0,0'
-          url += "&ref=" + [@trimming[:x], @trimming[:y], @trimming[:w], @trimming[:h], 5000, 5000, 0, 0].join(',') if @trimming
+#           url += "&ref=" + [@trimming[:x], @trimming[:y], @trimming[:w], @trimming[:h], 5000, 5000, 0, 0].join(',') if @trimming
           url
         end
     end
+
+
+    # ----- protected -----
+    protected
 
     def image_page_at(i)
       page_url = base_page_url

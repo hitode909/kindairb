@@ -14,32 +14,6 @@ module Kindai
     def download
       create_directory
       download_images
-      if @test_mode
-        Kindai::Util.logger.info "test done"
-        return
-      end
-      generate_pdf if @use_pdf
-      generate_zip if @use_zip
-    end
-
-    def use_divide
-      Kindai::Util.logger.info "dividing enabled"
-      @use_divide = true
-    end
-
-    def use_pdf
-      Kindai::Util.logger.info "pdf output enabled"
-      @use_pdf = true
-    end
-
-    def use_zip
-      Kindai::Util.logger.info "zip output enabled"
-      @use_zip = true
-    end
-
-    def test_mode
-      Kindai::Util.logger.info "test mode enabled"
-      @test_mode = true
     end
 
     def directory_path
@@ -65,15 +39,6 @@ module Kindai
     def retry_count=(x)
       Kindai::Util.logger.info "retry_count = #{x}"
       @retry_count = x
-    end
-
-    def resize_option
-      @resize_option
-    end
-
-    def resize_option=(x)
-      Kindai::Util.logger.info "resize_option = #{x}"
-      @resize_option = x
     end
 
     protected
@@ -146,20 +111,5 @@ module Kindai
       }
     end
 
-    def has_whole_file_at(i)
-      File.size?(path_at(i))
-    end
-
-    def has_divided_file_at(i)
-      File.size?(Kindai::Util.append_suffix(path_at(i), '0')) && File.size?(Kindai::Util.append_suffix(path_at(i), '1'))
-    end
-
-    def generate_pdf
-      Kindai::Util.generate_pdf(full_directory_path, [@book.author, @book.title].compact.join(' - '))
-    end
-
-    def generate_zip
-      Kindai::Util.generate_zip(full_directory_path)
-    end
   end
 end

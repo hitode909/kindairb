@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 require 'open3'
 require 'tempfile'
+require 'digest/sha1'
+
 
 module Kindai::Util
   def self.logger
@@ -12,6 +14,11 @@ module Kindai::Util
   def self.debug_mode
     self.logger.level = Logger::DEBUG
     Kindai::Util.logger.info "debug mode enabled"
+  end
+
+  def self.exec(command)
+    logger.debug "exec #{command}"
+    `#{command}`
   end
 
   def self.download(url, file)

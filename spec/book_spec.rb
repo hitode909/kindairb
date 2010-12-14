@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-$:.unshift(File.dirname(__FILE__) + '/../lib')
-require 'kindai'
+require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe Kindai::Book do
   before do
@@ -11,12 +10,16 @@ describe Kindai::Book do
     @book.title.should == '正義の叫'
   end
 
-  it 'has page' do
-    @book.page.should == 31
+  it 'has total_page' do
+    @book.total_page.should == 31
   end
 
   it 'has author' do
     @book.author.should == '正義熱血社'
+  end
+
+  it 'has spread' do
+    @book.spread_at(1).should be_a_kind_of Kindai::Spread
   end
 
 end
