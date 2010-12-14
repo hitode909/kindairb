@@ -17,19 +17,9 @@ module Kindai
     end
 
     def directory_path
-      default = [@book.author, @book.title].compact.join(' - ')
-      default = @output_directory + '/' + default if @output_directory
-      return default unless File.exists?(default)
-      return default if File.directory?(default)
-      (1..(1/0.0)).each{ |suffix|
-        alter = [default, suffix].join('-')
-        return alter unless File.exists?(default)
-        return alter if File.directory?(default)
-      }
-    end
-
-    def full_directory_path
-      File.expand_path(directory_path)
+      path = [@book.author, @book.title].compact.join(' - ')
+      path = File.join(@output_directory, default) if @output_directory
+      File.expand_path path
     end
 
     def retry_count
@@ -39,6 +29,12 @@ module Kindai
     def retry_count=(x)
       Kindai::Util.logger.info "retry_count = #{x}"
       @retry_count = x
+    end
+
+    def download_spreads
+      self.book.spreads.each{|spread|
+        dl = Kindai::Downloader::Spread.new_from_spread(spread)
+      }
     end
 
     protected

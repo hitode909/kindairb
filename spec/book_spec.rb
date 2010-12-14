@@ -22,19 +22,8 @@ describe Kindai::Book do
     @book.author.should == '正義熱血社'
   end
 
-  it 'has spread' do
-    @book.spread_at(1).should be_a_kind_of Kindai::Spread
-  end
-
-  it 'has first spread' do
-    @book.first_spread.uri.should == @book.spread_at(1).uri
-  end
-
-  it 'has spread with limit' do
-    @book.spread_at(0).should be_nil
-    @book.spread_at(1).should be_a_kind_of Kindai::Spread
-    @book.spread_at(@book.total_spread).should be_a_kind_of Kindai::Spread
-    @book.spread_at(@book.total_spread + 10).should be_nil
+  it 'has spreads' do
+    @book.spreads.should have_exactly(@book.total_spread).spreads
   end
 
   it 'has base_uri' do

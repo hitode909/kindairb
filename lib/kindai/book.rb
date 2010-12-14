@@ -25,30 +25,13 @@ module Kindai
     end
 
     def total_spread
-      self.first_spread.page.search('select#dlPages option').length
+      self.spread_at(1).page.search('select#dlPages option').length
     end
 
-    # ----- spread -----
-    def first_spread
-      Kindai::Spread.new_from_book_and_spread_number(self, 1)
+    def spreads
+      @spreads ||= 1.upto(self.total_spread).map{|i| self.spread_at(i) }
     end
 
-    def spread_at(spread_number)
-      return nil unless (1..self.total_spread).include? spread_number
-      Kindai::Spread.new_from_book_and_spread_number(self, spread_number)
-    end
-
-    def each_spread
-      (1..(1/0.0)).each{|spread_number|
-        spread = spread_at(spread_number)
-        break unless spread.exists?
-        yield spread
-      }
-    end
-
-    # ----- page -----
-
-    # ----- uri -----
     def base_uri
       @base_uri ||=
         begin
@@ -62,14 +45,10 @@ module Kindai
         end
     end
 
-
-    # ----- protected -----
     protected
 
-    def image_page_at(i)
-      page_uri = base_page_uri
-      page_uri.gsub!(/koma=(\d+)/) { "koma=#{i}" }
-      Nokogiri::HTML Kindai::Util.fetch_uri page_uri
+    def spread_at(spread_number)
+      Kindai::Spread.new_from_book_and_spread_number(self, spread_number)
     end
 
     def metadata
@@ -86,8 +65,7 @@ module Kindai
         end
     end
 
-    # permalink_uri = @permalink_uri
-
+    # ----- pages -----
     def permalink_page
       @permalink_page ||=
         begin

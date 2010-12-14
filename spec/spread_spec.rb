@@ -4,7 +4,7 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 describe Kindai::Spread do
   before do
     @book = Kindai::Book.new_from_permalink('http://kindai.ndl.go.jp/info:ndljp/pid/922693')
-    @spread = @book.spread_at(5)
+    @spread = @book.spreads[4]
   end
 
   it 'has spread number' do
