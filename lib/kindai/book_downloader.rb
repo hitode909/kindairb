@@ -1,52 +1,50 @@
 # -*- coding: utf-8 -*-
 module Kindai
-  class Downloader
+  class BookDownloader
     attr_accessor :book
-    attr_accessor :output_directory
+    attr_accessor :retry_count
+    attr_accessor :base_path
 
     def self.new_from_book(book)
       raise TypeError, "#{book} is not Kindai::Book" unless book.is_a? Kindai::Book
       me = self.new
       me.book = book
+      me.retry_count = 0
+#      me.base_path = Pathname.new(ENV["HOME"]).to_s
       me
     end
 
     def download
       create_directory
-      download_images
+      download_spreads
     end
 
-    def directory_path
-      path = [@book.author, @book.title].compact.join(' - ')
-      path = File.join(@output_directory, default) if @output_directory
+    def book_path
+      path = File.join(self.base_path, [@book.author, @book.title].compact.join(' - '))
       File.expand_path path
     end
 
-    def retry_count
-      @retry_count || 3
-    end
+    protected
 
-    def retry_count=(x)
-      Kindai::Util.logger.info "retry_count = #{x}"
-      @retry_count = x
+    def create_directory
+      Dir.mkdir(book_path) unless File.directory?(book_path)
     end
 
     def download_spreads
       self.book.spreads.each{|spread|
-        dl = Kindai::Downloader::Spread.new_from_spread(spread)
+        dl = Kindai::SpreadDownloader.new_from_spread(spread)
+        dl.retry_count = self.retry_count
+        dl.download_to_path(self.book_path)
       }
     end
 
-    protected
+    # --------------------------------------------------------------------
 
     # TODO: output directory
     def path_at(i)
       "#{directory_path}/%03d.jpg" % i
     end
 
-    def create_directory
-      Dir.mkdir(directory_path) unless File.directory?(directory_path)
-    end
 
     def download_images
       (1..(1/0.0)).each { |i|
@@ -106,6 +104,5 @@ module Kindai
         end
       }
     end
-
   end
 end
