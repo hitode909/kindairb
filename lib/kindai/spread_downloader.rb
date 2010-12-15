@@ -39,9 +39,9 @@ module Kindai
       failed_count = 0
 
       begin
-        Kindai::Util.logger.info "downloading " + [self.spread.book.author, self.spread.book.title, "spread #{self.spread.spread_number}"].join(' - ')
+        Kindai::Util.logger.info "downloading " + [self.spread.book.author, self.spread.book.title, "spread #{self.spread.spread_number} / #{self.spread.book.total_spread}"].join(' - ')
         Kindai::Util.rich_download(spread.image_uri, self.spread_path)
-        if system "identify '#{self.spread_path}'" != 0
+        unless system("identify '#{self.spread_path}' > /dev/null")
           raise "image seems broken"
           self.delete
         end
