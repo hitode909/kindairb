@@ -29,7 +29,6 @@ def trimming(path)
   Dir.mkdir(output_dir) unless File.directory?(output_dir)
 
   files.each{|input_path|
-    next if rand > 0.3
     output_path = File.join(output_dir, File.basename(input_path))
     next if File.exist?(output_path)
     puts output_path
