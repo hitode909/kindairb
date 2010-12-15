@@ -168,23 +168,36 @@ module Kindai::Util
   end
 
   # XXX: GC
-  def self.trim_info(img_path)
+  def self.trim_info(img_path, erase_center_line = true)
+    debug = true
     img = Magick::ImageList.new(img_path)
-    thumb = img.resize_to_fit(200, 200)
+
+    thumb = img.resize_to_fit(400, 400)
+
+
+    thumb.write('a1.jpg') if debug
+    # thumb = thumb.normalize
+    thumb = thumb.level(Magick::QuantumRange*0.4, Magick::QuantumRange*0.7)
+    thumb.write('a2.jpg') if debug
 
     d = Magick::Draw.new
     d.fill = 'white'
-    d.rectangle(thumb.columns * 0.4, 0, thumb.columns * 0.6, thumb.rows)
-    d.rectangle(0, 0, thumb.columns * 0.05, thumb.rows)
-    d.rectangle(thumb.columns * 0.95, 0, thumb.columns, thumb.rows)
-    d.rectangle(0, 0, thumb.columns, thumb.rows * 0.05)
-    d.rectangle(0, thumb.rows * 0.95, thumb.columns, thumb.rows)
+    cut_x = 0.07
+    cut_y = 0.04
+    d.rectangle(thumb.columns * 0.4, 0, thumb.columns * 0.6, thumb.rows) if erase_center_line # center line
+    d.rectangle(0, 0, thumb.columns * cut_x, thumb.rows) # h
+    d.rectangle(0, thumb.rows * (1 - cut_y), thumb.columns, thumb.rows)    # j
+    d.rectangle(0, 0, thumb.columns, thumb.rows * cut_y)             # k
+    d.rectangle(thumb.columns * (1 - cut_x), 0, thumb.columns, thumb.rows) # l
     d.draw(thumb)
+    thumb.write('a.jpg') if debug
 
-    thumb = thumb.threshold(Magick::QuantumRange*0.9)
+    # thumb = thumb.threshold(Magick::QuantumRange*0.8)
+    # thumb.write('b.jpg') if debug
 
     thumb.fuzz = 50
     thumb.trim!
+    thumb.write('c.jpg') if debug
 
     scale = thumb.base_columns / thumb.page.width.to_f
 
@@ -194,6 +207,18 @@ module Kindai::Util
       :width => thumb.columns * scale,
       :height => thumb.rows * scale
     }
+
+    # erased by cente line?
+    if (thumb.page.x / thumb.page.width.to_f - 0.6).abs < 0.05 && erase_center_line
+      Kindai::Util.logger.info "retry trim(erased by center line?)"
+      new_info = trim_info(img_path, false)
+      Kindai::Util.logger.info "x: #{info[:x]} -> #{new_info[:x]}"
+      Kindai::Util.logger.info "width: #{info[:width]} -> #{new_info[:width]}"
+      info[:x] = new_info[:x]
+      info[:width] = new_info[:width]
+    else
+      warn 'ok'
+    end
 
     img = nil
     thumb = nil
