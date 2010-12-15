@@ -2,6 +2,7 @@
 require 'open3'
 require 'tempfile'
 require 'digest/sha1'
+require 'RMagick'
 
 module Kindai::Util
   def self.logger
@@ -164,6 +165,50 @@ module Kindai::Util
           $stdout.flush
         end
       })
+  end
+
+  # XXX: GC
+  def self.trim_info(img_path)
+    img = Magick::ImageList.new(img_path)
+    thumb = img.resize_to_fit(200, 200)
+
+    d = Magick::Draw.new
+    d.fill = 'white'
+    d.rectangle(thumb.columns * 0.4, 0, thumb.columns * 0.6, thumb.rows)
+    d.rectangle(0, 0, thumb.columns * 0.05, thumb.rows)
+    d.rectangle(thumb.columns * 0.95, 0, thumb.columns, thumb.rows)
+    d.rectangle(0, 0, thumb.columns, thumb.rows * 0.05)
+    d.rectangle(0, thumb.rows * 0.95, thumb.columns, thumb.rows)
+    d.draw(thumb)
+
+    thumb = thumb.threshold(Magick::QuantumRange*0.9)
+
+    thumb.fuzz = 50
+    thumb.trim!
+
+    scale = thumb.base_columns / thumb.page.width.to_f
+
+    info = {
+      :x => thumb.page.x * scale,
+      :y => thumb.page.y * scale,
+      :width => thumb.columns * scale,
+      :height => thumb.rows * scale
+    }
+
+    img = nil
+    thumb = nil
+
+    return info
+  end
+
+  def self.trim_file_to(src_path, dst_path, info = nil)
+    info = trim_info(src_path) unless info
+
+    img = Magick::ImageList.new(src_path)
+    img.crop! info[:x], info[:y], info[:width], info[:height]
+    img.write dst_path
+
+    img = nil
   end
 
 end
