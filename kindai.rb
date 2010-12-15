@@ -12,7 +12,7 @@ EOF
 config = { }
 parser = OptionParser.new(banner) {|opt|
   opt.on('-o OUTPUT_DIRECTORY', '--output', 'specify output directory') {|v|
-    config[:output_directory] = v
+    config[:base_path] = v
   }
   opt.on('-d', '--divide', 'divide image into two') {|v|
     Kindai::Util.convert_required
