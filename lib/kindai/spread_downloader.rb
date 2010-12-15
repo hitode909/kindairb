@@ -9,7 +9,7 @@ module Kindai
       raise TypeError, "#{spread} is not Kindai::Spread" unless spread.is_a? Kindai::Spread
       me = self.new
       me.spread = spread
-      me.retry_count = 0
+      me.retry_count = 3
       me.book_path = Pathname.new(ENV["HOME"]).to_s
       me
     end
