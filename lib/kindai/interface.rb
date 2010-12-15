@@ -16,8 +16,12 @@ module Kindai::Interface
   def self.download_keyword(keyword, config = { })
     searcher = Kindai::Searcher.search(keyword)
     searcher.each_with_index { |book, index|
-      Kindai::Util.logger.info "book #{index+1} / #{searcher.length}"
-      download_book book, config
+      begin
+        Kindai::Util.logger.info "book #{index+1} / #{searcher.length}"
+        download_book book, config
+      rescue => error
+        p error
+      end
     }
   end
 end
