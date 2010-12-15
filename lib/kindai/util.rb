@@ -169,11 +169,10 @@ module Kindai::Util
 
   # XXX: GC
   def self.trim_info(img_path, erase_center_line = true)
-    debug = true
+    debug = false
     img = Magick::ImageList.new(img_path)
 
     thumb = img.resize_to_fit(400, 400)
-
 
     thumb.write('a1.jpg') if debug
     # thumb = thumb.normalize
