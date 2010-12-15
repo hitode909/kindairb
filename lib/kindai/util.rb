@@ -215,8 +215,6 @@ module Kindai::Util
       Kindai::Util.logger.info "width: #{info[:width]} -> #{new_info[:width]}"
       info[:x] = new_info[:x]
       info[:width] = new_info[:width]
-    else
-      warn 'ok'
     end
 
     img = nil
