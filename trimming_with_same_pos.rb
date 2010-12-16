@@ -3,6 +3,13 @@
 $:.unshift(File.dirname(__FILE__) + '/lib')
 require 'kindai'
 
+class Array
+  def average
+    inject{|a, b| a + b} / length.to_f
+  end
+
+end
+
 if ARGV.empty?
   puts "usage: trimming.rb (path to directory)"
 end
@@ -11,18 +18,21 @@ def trimming(path)
   path = path.gsub(/\/$/, '')
 
   files = Dir.glob(File.join(path, '*.jpg'))
-  positions = {}
+  positions = {:x => [], :y => [], :width => [], :height => []}
   files.each{|input_path|
     pos = Kindai::Util.trim_info(input_path)
-    key = [(pos[:x] / pos[:y] * 100).to_i, (pos[:width] / pos[:height] * 100).to_i]
-    positions[key] = [] unless positions.has_key? key
-    positions[key] << pos
-    p positions.keys
+
+    [:x, :y, :width, :height].each{|key|
+      positions[key] << pos[key]
+    }
+
     GC.start
   }
 
-  good_pos = positions.values.sort_by{|a| a.length}.last.first
-  p positions.values.sort_by{|a| a.length}.last
+  good_pos = {}
+  [:x, :y, :width, :height].each{|key|
+    good_pos[key] = positions[key].average
+  }
 
   output_dir = path + '_trim'
   puts " => #{output_dir}"
