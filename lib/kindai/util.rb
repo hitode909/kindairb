@@ -167,6 +167,26 @@ module Kindai::Util
       })
   end
 
+  def self.trim_info_by_files(files)
+    positions = {:x => [], :y => [], :width => [], :height => []}
+    files.each{|file|
+      pos = trim_info(file)
+
+      [:x, :y, :width, :height].each{|key|
+        positions[key] << pos[key]
+      }
+      p file
+
+      GC.start
+    }
+
+    good_pos = {}
+    [:x, :y, :width, :height].each{|key|
+      good_pos[key] = average(positions[key])
+    }
+    good_pos
+  end
+
   # XXX: GC
   def self.trim_info(img_path, erase_center_line = true)
     debug = false
@@ -233,4 +253,15 @@ module Kindai::Util
     img = nil
   end
 
+  def self.resize_file_to(src_path, dst_path, info)
+    p [src_path, dst_path, info]
+    img = Magick::ImageList.new(src_path)
+    img.resize_to_fit(info[:width], info[:height]).write dst_path
+
+    img = nil
+  end
+
+  def self.average(array)
+    array.inject{|a, b| a + b} / array.length.to_f
+  end
 end

@@ -16,4 +16,5 @@ module Kindai
   require 'kindai/spread_downloader'
   require 'kindai/searcher'
   require 'kindai/interface'
+  require 'kindai/publisher'
 end

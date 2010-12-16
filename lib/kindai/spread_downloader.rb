@@ -16,12 +16,18 @@ module Kindai
 
     def download
       return false if self.has_file?
+      self.create_directory
       self.download_spread
       return true
     end
 
+    def create_directory
+      path = File.join self.book_path, "original"
+      Dir.mkdir(path) unless File.directory?(path)
+    end
+
     def spread_path
-      path = File.join self.book_path, "%03d.jpg" % self.spread.spread_number
+      path = File.join self.book_path, "original", "%03d.jpg" % self.spread.spread_number
       File.expand_path path
     end
 

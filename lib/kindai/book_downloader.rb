@@ -26,10 +26,13 @@ module Kindai
       File.expand_path path
     end
 
+    def create_directory
+      Dir.mkdir(book_path) unless File.directory?(book_path)
+    end
+
     def delete
       success = true
-      File.delete(*self.spread_downloaders.map(&:spread_path)) rescue success = false
-      Dir.delete(self.book_path) rescue success = false
+      FileUtil.rm_r(self.book_path) rescue success = false
       return success
     end
 
@@ -47,10 +50,6 @@ module Kindai
         dl.book_path = self.book_path
         dl
       }
-    end
-
-    def create_directory
-      Dir.mkdir(book_path) unless File.directory?(book_path)
     end
 
     def download_spreads
