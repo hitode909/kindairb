@@ -253,6 +253,7 @@ module Kindai::Util
     img = nil
   end
 
+
   def self.resize_file_to(src_path, dst_path, info)
     p [src_path, dst_path, info]
     img = Magick::ImageList.new(src_path)
@@ -264,4 +265,22 @@ module Kindai::Util
   def self.average(array)
     array.inject{|a, b| a + b} / array.length.to_f
   end
+
+  def self.divide_43(path, output_directory)
+    raise "#{path} not exist" unless File.exists? path
+    Kindai::Util.logger.info "dividing #{path}"
+
+    img = Magick::ImageList.new(src_path)
+
+    right = img.crop(img.columns - img.rows * 0.75, 0, img.columns * 0.75, img.rows)
+    right.write(append_suffix(path, '0'))
+    right = nil
+
+    left = img.crop(0, 0, img.rows * 0.75, img.rows)
+    left.write(append_suffix(path, '1'))
+    left = nil
+
+  end
+
+
 end
