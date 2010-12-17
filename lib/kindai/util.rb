@@ -268,7 +268,7 @@ module Kindai::Util
 
   def self.divide_43(src_path, output_directory)
     raise "#{src_path} not exist" unless File.exists? src_path
-    Kindai::Util.logger.info "dividing #{src_path}"
+    Kindai::Util.logger.info "divide #{src_path}"
 
     output_base = File.join(output_directory, File.basename(src_path))
 
