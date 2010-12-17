@@ -29,15 +29,27 @@ module Kindai
       self
     end
 
-    def publish
-      Kindai::Util.logger.info("publish")
-      raise "no name" unless config(:name)
+    def divide
+      config(:divide, true)
+      self
+    end
 
+    def publish
+      Kindai::Util.logger.info("publish to #{root_path}, #{config(:name)}")
+      raise "no name" unless config(:name)
+      if seems_finished?
+        Kindai::Util.logger.info("already published")
+        return
+      end
       create_directory
 
-      trim! if trim?
-      resize! if resize?
-      zip! if zip?
+      path = original_path
+
+      # リストをやりくりするようにする
+      path = trim!(path) if trim?
+      path = divide!(path) if divide?
+      path = resize!(path) if resize?
+      path = zip!(path) if zip?
     end
 
     # ------------------------------------
@@ -62,42 +74,51 @@ module Kindai
       config(:zip)
     end
 
-    def trim!
-      Kindai::Util.logger.info 'trim'
-      return if original_files.length == files(trim_path).length
+    def divide?
+      config(:divide)
+    end
+
+    # ---------- aciton --------------
+
+    def trim!(source_path)
+      return trim_path if files(source_path).length == files(trim_path).length
       info = config(:trim).kind_of?(Hash) ? config(:trim) : Kindai::Util.trim_info_by_files(original_files)
-      original_files.each{|file|
+      files(source_path).each{|file|
         dst = File.join(trim_path, File.basename(file))
         Kindai::Util.trim_file_to(file, dst, info)
         GC.start
       }
+      return trim_path
     end
 
-    def resize!
-      Kindai::Util.logger.info 'resize'
-      p @config
-      p config(:resize)
-      original_files.each{|file|
+    def resize!(source_path)
+      files(source_path).each{|file|
         dst = File.join(output_path, File.basename(file))
         Kindai::Util.resize_file_to(file, dst, config(:resize))
         GC.start
       }
+      return output_path
     end
 
-    def zip!
-      Kindai::Util.logger.info 'zip'
-      Kindai::Util.generate_zip(output_path)
+    def divide!(source_path)
+      files(source_path).each{|file|
+        Kindai::Util.divide_43(file, output_path)
+        GC.start
+      }
+      return output_path
     end
+
+    def zip!(source_path)
+      Kindai::Util.generate_zip(source_path)
+      FileUtils.rm_r(self.output_path)
+      return source_path
+    end
+
+    # ---------util------------
 
     def create_directory
-      path = File.join root_path, config(:name)
-      Dir.mkdir(path) unless File.directory?(path)
-      path = File.join root_path, 'trim'
-      Dir.mkdir(path) unless File.directory?(path)
-    end
-
-    def source_path
-      trim? ? trim_path : original_path
+      Dir.mkdir(trim_path) unless File.directory?(trim_path)
+      Dir.mkdir(output_path) unless File.directory?(output_path)
     end
 
     def trim_path
@@ -109,7 +130,7 @@ module Kindai
     end
 
     def output_path
-      File.join(root_path, config(:name))
+      File.join(root_path, File.basename(root_path) + '_' + config(:name))
     end
 
     def original_files
@@ -118,6 +139,10 @@ module Kindai
 
     def files(path)
       Dir.glob(File.join(path, '*jpg'))
+    end
+
+    def seems_finished?
+      File.directory?(output_path) or File.exists?(output_path + '.zip')
     end
 
   end

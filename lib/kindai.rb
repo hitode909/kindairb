@@ -7,6 +7,7 @@ require 'logger'
 require 'open-uri'
 require 'cgi'
 require 'pathname'
+require 'fileutils'
 
 module Kindai
   require 'kindai/util'

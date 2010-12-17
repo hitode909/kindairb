@@ -32,7 +32,7 @@ module Kindai
 
     def delete
       success = true
-      FileUtil.rm_r(self.book_path) rescue success = false
+      FileUtils.rm_r(self.book_path) rescue success = false
       return success
     end
 

@@ -245,6 +245,7 @@ module Kindai::Util
 
   def self.trim_file_to(src_path, dst_path, info = nil)
     info = trim_info(src_path) unless info
+    Kindai::Util.logger.info "trim #{src_path} #{info}"
 
     img = Magick::ImageList.new(src_path)
     img.crop! info[:x], info[:y], info[:width], info[:height]
@@ -255,7 +256,6 @@ module Kindai::Util
 
 
   def self.resize_file_to(src_path, dst_path, info)
-    p [src_path, dst_path, info]
     img = Magick::ImageList.new(src_path)
     img.resize_to_fit(info[:width], info[:height]).write dst_path
 
@@ -266,19 +266,23 @@ module Kindai::Util
     array.inject{|a, b| a + b} / array.length.to_f
   end
 
-  def self.divide_43(path, output_directory)
-    raise "#{path} not exist" unless File.exists? path
-    Kindai::Util.logger.info "dividing #{path}"
+  def self.divide_43(src_path, output_directory)
+    raise "#{src_path} not exist" unless File.exists? src_path
+    Kindai::Util.logger.info "dividing #{src_path}"
+
+    output_base = File.join(output_directory, File.basename(src_path))
 
     img = Magick::ImageList.new(src_path)
 
     right = img.crop(img.columns - img.rows * 0.75, 0, img.columns * 0.75, img.rows)
-    right.write(append_suffix(path, '0'))
+    right.write(append_suffix(output_base, '0'))
     right = nil
 
     left = img.crop(0, 0, img.rows * 0.75, img.rows)
-    left.write(append_suffix(path, '1'))
+    left.write(append_suffix(output_base, '1'))
     left = nil
+
+    File.delete(src_path)
 
   end
 
