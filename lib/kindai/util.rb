@@ -21,11 +21,13 @@ module Kindai::Util
     `#{command}`
   end
 
-  def self.download(url, file)
+  def self.download(uri, file)
+    total = nil
+    uri = URI.parse(uri) unless uri.kind_of? URI
+
+    got = fetch_uri(uri)
     open(file, 'w') {|local|
-      got = open(url) {|remote|
-        local.write(remote.read)
-      }
+      local.write(got)
     }
   rescue Exception, TimeoutError => error
     if File.exists?(file)
@@ -55,56 +57,6 @@ module Kindai::Util
   # output: 'a=a&b=bbb
   def self.expand_params(params)
     params.each_pair.map{ |k, v| [URI.escape(k.to_s), URI.escape(v.to_s)].join('=')}.join('&')
-  end
-
-  def self.convert_required
-    raise "convert is required" if `which convert`.empty?
-  end
-
-  def self.check_file(path)
-    return true if `which convert`.empty?
-
-    stdin, stdout, stderr = Open3.popen3('convert', path, Tempfile.new('dummy').path)
-    r = stderr.read
-    r.empty?
-  end
-
-  def self.divide(path)
-    raise "#{path} not exist" unless File.exists? path
-    Kindai::Util.logger.info "dividing #{path}"
-
-    Kindai::Util.logger.debug "convert -fuzz 25% -trim '#{path}' '#{path}'"
-    system "convert -fuzz 25% -trim '#{path}' '#{path}'"
-
-    info = `identify '#{path}'`
-    image_width, image_height = *info.scan(/(\d+)x(\d+)/).first.map(&:to_i)
-    Kindai::Util.logger.debug [image_width, image_height]
-
-    Kindai::Util.logger.debug "convert -crop  '#{path}' '#{path}'"
-    system "convert -crop #{image_height*0.75}x#{image_height}+#{image_width - image_height*0.75}+0 '#{path}' '#{append_suffix(path, '0')}'"
-    system "convert -crop #{image_height*0.75}x#{image_height}+0+0 '#{path}' '#{append_suffix(path, '1')}'"
-
-    File.delete path
-
-    [append_suffix(path, '0'), append_suffix(path, '1')]
-  end
-
-  def self._divide(path)
-    raise "#{path} not exist" unless File.exists? path
-
-    Kindai::Util.logger.info "dividing #{path}"
-
-    Kindai::Util.logger.debug "convert -fuzz 25% -trim '#{path}' '#{path}'"
-    system "convert -fuzz 25% -trim '#{path}' '#{path}'"
-
-    Kindai::Util.logger.debug "convert -crop 50%x100% '#{path}' '#{path}'"
-    system "convert -crop 50%x100% '#{path}' '#{path}'"
-
-    File.rename append_suffix(path, '0'), append_suffix(path, 'tmp')
-    File.rename append_suffix(path, '1'), append_suffix(path, '0')
-    File.rename append_suffix(path, 'tmp'), append_suffix(path, '1')
-    File.delete path
-    [append_suffix(path, '0'), append_suffix(path, '1')]
   end
 
   def self.append_suffix(path, suffix)
@@ -168,6 +120,7 @@ module Kindai::Util
   end
 
   def self.trim_info_by_files(files)
+    Kindai::Util.logger.info "get trim info"
     positions = {:x => [], :y => [], :width => [], :height => []}
     files.each{|file|
       pos = trim_info(file)
@@ -175,7 +128,6 @@ module Kindai::Util
       [:x, :y, :width, :height].each{|key|
         positions[key] << pos[key]
       }
-      p file
 
       GC.start
     }
