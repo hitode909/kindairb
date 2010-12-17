@@ -136,6 +136,7 @@ module Kindai::Util
     [:x, :y, :width, :height].each{|key|
       good_pos[key] = average(positions[key])
     }
+    Kindai::Util.logger.info "trim position #{good_pos}"
     good_pos
   end
 
@@ -197,7 +198,7 @@ module Kindai::Util
 
   def self.trim_file_to(src_path, dst_path, info = nil)
     info = trim_info(src_path) unless info
-    Kindai::Util.logger.info "trim #{src_path} #{info}"
+    Kindai::Util.logger.info "trim #{src_path}"
 
     img = Magick::ImageList.new(src_path)
     img.crop! info[:x], info[:y], info[:width], info[:height]
@@ -234,8 +235,7 @@ module Kindai::Util
     left.write(append_suffix(output_base, '1'))
     left = nil
 
-    File.delete(src_path)
-
+    File.delete(src_path) if File.basename(src_path) == output_directory
   end
 
 
