@@ -20,7 +20,7 @@ module Kindai
     end
 
     def trim(geometry = true)
-      config(:trim, geometry)
+      config(:trim, geometry) unless config(:trim)
       self
     end
 
@@ -61,8 +61,8 @@ module Kindai
     protected
 
     def config(k, v = nil)
-      return @config[k] unless v
       @config ||= {}
+      return @config[k] unless v
       @config[k] = v
       @config
     end
