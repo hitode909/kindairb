@@ -11,7 +11,7 @@ module Kindai::Util
     @logger
   end
 
-  def self.debug_mode
+  def self.debug_mode!
     self.logger.level = Logger::DEBUG
     Kindai::Util.logger.info "debug mode enabled"
   end

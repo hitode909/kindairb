@@ -35,7 +35,7 @@ module Kindai
     end
 
     def publish
-      Kindai::Util.logger.info("publish to #{root_path}, #{config(:name)}")
+      Kindai::Util.logger.info("publish #{root_path}, #{config(:name)}")
       raise "no name" unless config(:name)
       if seems_finished?
         Kindai::Util.logger.info("already published")
@@ -50,6 +50,11 @@ module Kindai
       path = divide!(path) if divide?
       path = resize!(path) if resize?
       path = zip!(path) if zip?
+    end
+
+    def publish_auto
+      self.clone.trim.resize(1280, 960).trim.zip.name('iphone').publish
+      self.clone.trim.resize(600, 800).divide.zip.name('kindle').publish
     end
 
     # ------------------------------------

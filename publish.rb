@@ -10,6 +10,5 @@ end
 ARGV.each{|file|
   Kindai::Util.logger.info "publish #{file}"
   publisher = Kindai::Publisher.new_from_path file
-  publisher.clone.trim.resize(1280, 960).trim.zip.name('iphone').publish
-  publisher.clone.trim.resize(600, 800).divide.zip.name('kindle').publish
+  publisher.publish_auto
 }

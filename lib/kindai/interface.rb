@@ -11,6 +11,9 @@ module Kindai::Interface
     downloader.retry_count = config[:retry_count] if config[:retry_count]
     Kindai::Util.logger.info "download #{book.title}(#{book.total_page} pages) to #{downloader.book_path}"
     downloader.download
+
+    publisher = Kindai::Publisher.new_from_path downloader.book_path
+    publisher.publish_auto
   end
 
   def self.download_keyword(keyword, config = { })
