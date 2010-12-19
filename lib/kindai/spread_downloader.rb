@@ -47,20 +47,17 @@ module Kindai
       begin
         Kindai::Util.logger.info "downloading " + [self.spread.book.author, self.spread.book.title, "spread #{self.spread.spread_number} / #{self.spread.book.total_spread}"].join(' - ')
         Kindai::Util.rich_download(spread.image_uri, self.spread_path)
-        unless system("identify '#{self.spread_path}' > /dev/null")
-          raise "image seems broken"
-          self.delete
-        end
       rescue Interrupt => err
         Kindai::Util.logger.error "#{err.class}: #{err.message}"
         exit 1
       rescue StandardError, TimeoutError => err
-        Kindai::Util.logger.warn "failed (#{failed_count}/#{self.retry_count}) #{err.class}: #{err.message}"
+        Kindai::Util.logger.warn "failed (#{failed_count+1}/#{self.retry_count}) #{err.class}: #{err.message}"
         raise err if failed_count == self.retry_count
 
         Kindai::Util.logger.info "sleep and retry"
         failed_count += 1
         sleep 3
+        retry
       end
     end
 
