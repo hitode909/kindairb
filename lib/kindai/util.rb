@@ -3,6 +3,7 @@ require 'open3'
 require 'tempfile'
 require 'digest/sha1'
 require 'RMagick'
+require 'zipruby'
 
 module Kindai::Util
   def self.logger
@@ -14,11 +15,6 @@ module Kindai::Util
   def self.debug_mode!
     self.logger.level = Logger::DEBUG
     Kindai::Util.logger.info "debug mode enabled"
-  end
-
-  def self.exec(command)
-    logger.debug "exec #{command}"
-    `#{command}`
   end
 
   def self.download(uri, file)
@@ -63,40 +59,16 @@ module Kindai::Util
     path.gsub(/\.(\w+)$/, "-#{suffix}.\\1")
   end
 
-  def self.generate_pdf(directory, title = nil)
-    raise "#{directory} is not directory." unless File.directory? directory
-
-    Kindai::Util.logger.info "generating pdf"
-
-    app_path = File.expand_path(File.dirname(__FILE__) + '/../../app/topdf.app')
-    directory = File.expand_path(directory)
-    Kindai::Util.logger.debug "open -a #{app_path} -W '#{directory}'"
-    system "open -a #{app_path} -W '#{directory}'"
-
-    if title
-      from = Dir.pwd
-      Dir.chdir(directory)
-      File.rename(Dir.glob('*pdf').last, "../#{title}.pdf")
-      Dir.chdir(from)
-    end
-
-    Kindai::Util.logger.info "generating pdf done"
-  end
-
   def self.generate_zip(directory)
+    Kindai::Util.logger.info "zip #{directory}"
     directory = File.expand_path(directory)
     raise "#{directory} is not directory." unless File.directory? directory
 
-    from = Dir.pwd
-    Dir.chdir(directory)
-
-    Kindai::Util.logger.info "generating zip"
-    Kindai::Util.logger.debug "zip -q -r '#{Time.now.to_i}.zip' *jpg"
-    system "zip -q -r '#{Time.now.to_i}.zip' *jpg"
-    title = File.basename(directory)
-    File.rename(Dir.glob('*zip').last, "../#{title}.zip")
-
-    Dir.chdir(from)
+    filename = File.join(directory, '..', "#{File.basename(directory)}.zip")
+    files = Dir.glob(File.join(directory, '*jpg'))
+    Zip::Archive.open(filename, Zip::CREATE) {|arc|
+      files.each{|f| arc.add_file(f) }
+    }
   end
 
   def self.fetch_uri(uri, rich = false)
@@ -211,6 +183,7 @@ module Kindai::Util
 
 
   def self.resize_file_to(src_path, dst_path, info)
+    Kindai::Util.logger.info "resize #{src_path}"
     img = Magick::ImageList.new(src_path)
     img.resize_to_fit(info[:width], info[:height]).write dst_path
 
