@@ -34,6 +34,10 @@ module Kindai
       self
     end
 
+    def empty(glob)
+      FileUtils.rm_r(Dir.glob(File.join(self.root_path, glob)))
+    end
+
     def publish
       Kindai::Util.logger.info("publish #{root_path}, #{config(:name)}")
       raise "no name" unless config(:name)
@@ -45,7 +49,6 @@ module Kindai
 
       path = original_path
 
-      # リストをやりくりするようにする
       path = trim!(path) if trim?
       path = divide!(path) if divide?
       path = resize!(path) if resize?

@@ -32,6 +32,8 @@ end
 ARGV.each{|file|
   Kindai::Util.logger.info "publish #{file}"
   publisher = Kindai::Publisher.new_from_path file
+  publisher.empty('trim')
+  publisher.empty('*zip')
   if config[:trimming]
     publisher.trim(config[:trimming])
   end
