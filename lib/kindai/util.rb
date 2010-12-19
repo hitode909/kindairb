@@ -106,7 +106,7 @@ module Kindai::Util
 
     total = nil
     from = Time.now
-    uri.read(
+    got = uri.read(
       :content_length_proc => proc{|_total|
         total = _total
       },
@@ -117,6 +117,8 @@ module Kindai::Util
           $stdout.flush
         end
       })
+    raise "received size unmatch(#{got.bytesize}, #{total})" if got.bytesize != total
+    return got
   end
 
   def self.trim_info_by_files(files)
