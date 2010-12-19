@@ -59,16 +59,36 @@ module Kindai::Util
     path.gsub(/\.(\w+)$/, "-#{suffix}.\\1")
   end
 
+  def self.execute_and_log(command)
+    logger.debug command
+    system command or raise "#{commands} failed"
+  end
+
   def self.generate_zip(directory)
     Kindai::Util.logger.info "zip #{directory}"
     directory = File.expand_path(directory)
     raise "#{directory} is not directory." unless File.directory? directory
 
-    filename = File.join(directory, '..', "#{File.basename(directory)}.zip")
+    filename = File.expand_path(File.join(directory, '..', "#{File.basename(directory)}.zip"))
     files = Dir.glob(File.join(directory, '*jpg'))
-    Zip::Archive.open(filename, Zip::CREATE) {|arc|
-      files.each{|f| arc.add_file(f) }
-    }
+    begin
+      Zip::Archive.open(filename, Zip::CREATE) {|arc|
+        files.each{|f| arc.add_file(f) }
+      }
+    rescue => error
+      File.delete(filename) if File.exists?(filename)
+      logger.warn "#{error.class}: #{error.message}"
+      logger.warn "zipruby died. trying zip command"
+      generate_zip_system_command(directory)
+    end
+  end
+
+  def self.generate_zip_system_command(directory)
+    Kindai::Util.logger.info "zip(system) #{directory}"
+    from = Dir.pwd
+    Dir.chdir(directory)
+    execute_and_log "zip -q -r '../#{File.basename(directory)}.zip' *jpg"
+    Dir.chdir(from)
   end
 
   def self.fetch_uri(uri, rich = false)
