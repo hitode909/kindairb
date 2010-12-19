@@ -158,8 +158,8 @@ module Kindai::Util
     if (thumb.page.x / thumb.page.width.to_f - 0.6).abs < 0.05 && erase_center_line
       Kindai::Util.logger.info "retry trim(erased by center line?)"
       new_info = trim_info(img_path, false)
-      Kindai::Util.logger.info "x: #{info[:x]} -> #{new_info[:x]}"
-      Kindai::Util.logger.info "width: #{info[:width]} -> #{new_info[:width]}"
+      Kindai::Util.logger.debug "x: #{info[:x]} -> #{new_info[:x]}"
+      Kindai::Util.logger.debug "width: #{info[:width]} -> #{new_info[:width]}"
       info[:x] = new_info[:x]
       info[:width] = new_info[:width]
     end
