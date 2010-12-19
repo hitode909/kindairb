@@ -150,7 +150,7 @@ module Kindai
     end
 
     def seems_finished?
-      File.directory?(output_path) or File.exists?(output_path + '.zip')
+      zip? ? File.exists?(output_path + '.zip') : File.directory?(output_path)
     end
 
   end

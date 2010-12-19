@@ -1,4 +1,5 @@
 source 'http://rubygems.org'
 
 gem 'nokogiri'
-require 'RMagick'
+gem 'RMagick'
+gem 'zipruby'
