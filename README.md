@@ -25,53 +25,53 @@ URLの代わりに検索ワードを指定すると，ヒットした本をま�
 
     ruby kindai.rb http://kindai.ndl.go.jp/info:ndljp/pid/922693 --output ~/Documents/
 
- --retryオプションで，ダウンロードに失敗したとき何回やり直すかを指定できます．標準では3回ですが，回線が不安定な場合などは増やすとよいです．
+ --retryオプションで，ダウンロードに失敗したときのリトライ回数を指定できます．標準では3回です．
 
     ruby kindai.rb http://kindai.ndl.go.jp/info:ndljp/pid/922693 --retry 10
 
- --divideオプションで，ダウンロードした画像を左右のページにトリミングします．ImageMagickが必要です．
 
-    ruby kindai.rb http://kindai.ndl.go.jp/info:ndljp/pid/922693 --divide
+本の加工(自動)
+--------------
 
- --resizeオプションで，ダウンロードした画像をリサイズします．ImageMagickが必要です．横600，縦800ピクセルにリサイズする場合は以下のように指定します．
+ダウンロードされた本は読みやすいように加工され，iPhone用とKindle用のファイルが作られます．
+以下のようなファイル構成になります．
 
-    ruby kindai.rb http://kindai.ndl.go.jp/info:ndljp/pid/922693 --resize 600x800
+    正義熱血社 - 正義の叫
+    ├── original
+    │   ├── 001.jpg
+    │   ├── 002.jpg
+    │   ├── 003.jpg
+    (中略)
+    │   └── 020.jpg
+    ├── trim
+    │   ├── 001.jpg
+    │   ├── 002.jpg
+    │   ├── 003.jpg
+    (中略)
+    │   └── 020.jpg
+    ├── 正義熱血社 - 正義の叫_iphone.zip
+    └── 正義熱血社 - 正義の叫_kindle.zip
 
- --pdfオプションで，ダウンロードした画像をまとめてPDFにします．Macのみ対応しています．
+original/以下にはダウンロードしただけの，加工前の画像，trim/以下にはトリミングして余白を取り除いた画像が入っています．
+_iphone.zipは，iPhoneの画面サイズ(1280x960)にリサイズされた見開き画像のzipファイルです．Comic Glassで読むのに適しています．
+_kindle.zipは，Kindle3の画面サイズ(600x800)にリサイズされ，1ページずつに裁断された画像のzipファイルです．
 
-    ruby kindai.rb http://kindai.ndl.go.jp/info:ndljp/pid/922693 --pdf
 
- --zipオプションで，ダウンロードした画像をまとめてzipにします．zipコマンドが必要です．
+本の加工(手動)
+--------------
 
-    ruby kindai.rb http://kindai.ndl.go.jp/info:ndljp/pid/922693 --zip
+トリミング位置は自動的に決められますが，ダウンロード後に，ずれていることが分かった場合は，publish.rbを使ってトリミング位置を指定できます．
 
- --trimming-オプションで，画像を指定した範囲でトリミングします．あらかじめ本の大きさをピクセル単位で調べておいて，余白を取り除くのに使えます．
+    ruby publish.rb --position 2905x2510+270+190 "~/Documents/正義熱血社 - 正義の叫"
 
-    ruby kindai.rb http://kindai.ndl.go.jp/info:ndljp/pid/922693 \
-                   --trimming-x 330 --trimming-y 200 --trimming-width 2800 --trimming-height 2500
-    もしくは
-    ruby kindai.rb http://kindai.ndl.go.jp/info:ndljp/pid/922693 -x 330 -y 200 -w 2800 -h 2500
-
- --testオプションで，最初の見開きだけをダウンロードします．これは，--trimmingオプションの引数を調整するのに便利です．
-
-    ruby kindai.rb http://kindai.ndl.go.jp/info:ndljp/pid/922693 --test
-
-おすすめ設定
-------------
-
-Kindleで読む場合は，以下のオプションを設定すると便利です．トリミングして，左右2分割して，zipを作ります．トリミング範囲(x,y,w,h)は，予め調べておく必要があります．
-
-    ruby kindai.rb "http://kindai.da.ndl.go.jp/info:ndljp/pid/889675" \
-         --output ~/Documents/kindai --divide --resize 600x800 --zip -x 320 -y 210 -w 2880 -h 2330
+幅2905ピクセル，高さ2510ピクセル，左の余白270ピクセル，上の余白190ピクセルでトリミングされます．
 
 動作環境
 --------
 
 * Ruby が必要です．
-* Nokogiri が必要なので，RubyGems でインストールしてください．
+* Nokogiri と RMagick が必要です，RubyGems でインストールしてください．
 * Gemfile を書いてあるので，bundler が入ってる環境では bundle install コマンドを実行するだけで必要な Gem が入ります．
-* 左右のページにトリミングする場合は，ImageMagickが必要です．ImageMagickがあるとき，画像が正しくダウンロードできたかどうかチェックするので，あると便利です．
-[ImageMagick: Convert, Edit, and Compose Images](http://www.imagemagick.org/script/index.php)
 
 その他
 ------
