@@ -20,7 +20,7 @@ describe Kindai::Spread do
   end
 
   it 'has image_uri' do
-    @spread.image_uri.should == "http://kindai.da.ndl.go.jp/JPEG/ESY13.jpg"
+    @spread.image_uri.should == "http://kindai.da.ndl.go.jp/JPEG/FGD20.jpg"
   end
 
 end
