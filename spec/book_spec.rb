@@ -10,11 +10,7 @@ describe Kindai::Book do
     @book.title.should == '正義の叫'
   end
 
-  it 'has total page' do
-    @book.total_page.should == 31
-  end
-
-  it 'has total sprea' do
+  it 'has total spread' do
     @book.total_spread.should == 20
   end
 
@@ -30,4 +26,14 @@ describe Kindai::Book do
     @book.base_uri.should == "http://kindai.da.ndl.go.jp/scrpt/ndlimageviewer-rgc.aspx?pid=info%3Andljp%2Fpid%2F922693&jp=42016454&vol=10010&koma=1&vs=10000,10000,0,0,0,0,0,0"
   end
 
+end
+
+describe Kindai::Book, 'with series' do
+  before do
+    @book = Kindai::Book.new_from_permalink('http://kindai.da.ndl.go.jp/info:ndljp/pid/890078')
+  end
+
+  it 'has title' do
+    @book.title.should == '講談日露戦争記［第３冊］第3編'
+  end
 end

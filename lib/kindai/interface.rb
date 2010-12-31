@@ -9,7 +9,7 @@ module Kindai::Interface
     downloader = Kindai::BookDownloader.new_from_book(book)
     downloader.base_path = config[:base_path] if config[:base_path]
     downloader.retry_count = config[:retry_count] if config[:retry_count]
-    Kindai::Util.logger.info "download #{book.title}(#{book.total_page} pages) to #{downloader.book_path}"
+    Kindai::Util.logger.info "download #{book.title}(#{book.total_spread} spreads) to #{downloader.book_path}"
     downloader.download
 
     publisher = Kindai::Publisher.new_from_path downloader.book_path

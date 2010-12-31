@@ -13,15 +13,15 @@ module Kindai
 
     # ----- metadata -----
     def title
-      metadata['タイトル']
+      title_container = control_page.at('.titlehead')
+      subtitle_container = control_page.at('.headmenu')
+      title_string = title_container.content.strip
+      title_string += subtitle_container.content.strip if subtitle_container
+      title_string
     end
 
     def author
       metadata['著者標目']
-    end
-
-    def total_page
-      NKF.nkf("-m0Z1Ww", metadata['形態'].match(/^(.*)(?:ｐ)/)[1]).to_i
     end
 
     def total_spread
