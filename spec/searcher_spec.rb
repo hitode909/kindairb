@@ -25,3 +25,18 @@ describe Kindai::Searcher do
   end
 
 end
+
+describe Kindai::Searcher, 'with series' do
+  before do
+    Kindai::Util.logger.level = Logger::DEBUG
+    @searcher = Kindai::Searcher.search('講談日露戦争記')
+  end
+
+  it 'is Searcher' do
+    @searcher.should be_a_instance_of Kindai::Searcher
+  end
+
+  it 'has length' do
+    @searcher.length.should == 12
+  end
+end
