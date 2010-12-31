@@ -94,6 +94,7 @@ module Kindai::Util
 
   def self.fetch_uri(uri, rich = false)
     uri = URI.parse(uri) unless uri.kind_of? URI
+    self.logger.debug "fetch_uri #{uri}"
 
     return uri.read unless rich
 
