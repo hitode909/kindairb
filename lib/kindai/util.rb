@@ -7,6 +7,7 @@ require 'zipruby'
 
 module Kindai::Util
   def self.logger
+    return @logger if @logger
     @logger ||= Logger.new(STDOUT)
     @logger.level = Logger::INFO
     @logger
