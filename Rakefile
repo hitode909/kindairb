@@ -18,9 +18,6 @@ Jeweler::Tasks.new do |gem|
   gem.description = %Q{kindai.rb is kindai digital library downloader.}
   gem.email = "hitode909@gmail.com"
   gem.authors = ["hitode909"]
-  gem.add_dependency("nokogiri", ">= 1.4.0")
-  gem.add_dependency("zipruby", ">= 0.3.6")
-  gem.add_dependency("rmagick", ">= 2.13.1")
 
   gem.executables = ["kindai.rb"]
 end
