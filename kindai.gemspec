@@ -20,11 +20,13 @@ Gem::Specification.new do |s|
   ]
   s.files = [
     "Gemfile",
+    "Gemfile.lock",
     "LICENSE.txt",
     "README.rdoc",
     "Rakefile",
     "VERSION",
     "bin/kindai.rb",
+    "kindai.gemspec",
     "kindai.rb",
     "lib/kindai.rb",
     "lib/kindai/book.rb",
