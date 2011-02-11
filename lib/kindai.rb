@@ -10,6 +10,9 @@ require 'pathname'
 require 'fileutils'
 
 module Kindai
+  VERSION = File.read(File.join(File.dirname(__FILE__), '../VERSION')).strip
+
+  require 'kindai/cli'
   require 'kindai/util'
   require 'kindai/book'
   require 'kindai/spread'

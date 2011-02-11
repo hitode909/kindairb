@@ -8,10 +8,8 @@ self_file =
   else
     __FILE__
   end
-$:.unshift(File.dirname(self_file) + "/lib")
+$:.unshift(File.dirname(self_file) + "/../lib")
 
 require 'kindai'
-
-warn 'WARNING: This script is deprecated. Use bin/kindai.rb'
 
 Kindai::CLI.execute(STDOUT, ARGV)
