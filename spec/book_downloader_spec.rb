@@ -12,9 +12,9 @@ describe Kindai::BookDownloader do
   end
 
   it 'has retry_count' do
-    @downloader.retry_count.should == 3
-    @downloader.retry_count = 5
-    @downloader.retry_count.should == 5
+    @downloader.retry_count.should == 30
+    @downloader.retry_count = 50
+    @downloader.retry_count.should == 50
   end
 
   it 'has base path' do

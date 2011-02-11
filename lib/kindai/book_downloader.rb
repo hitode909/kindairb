@@ -9,7 +9,7 @@ module Kindai
       raise TypeError, "#{book} is not Kindai::Book" unless book.is_a? Kindai::Book
       me = self.new
       me.book = book
-      me.retry_count = 3
+      me.retry_count = 30
       me.base_path = Dir.pwd
       me
     end
