@@ -12,6 +12,8 @@ RubyGemsからインストールできます．
 
 == 使い方
 
+gemをインストールすると，kindai.rbというコマンドがインストールされます．
+
 起動時の引数に，ダウンロードしたい本の URL を指定します．スペース区切りで複数指定できます．
 
     kindai.rb http://kindai.ndl.go.jp/info:ndljp/pid/922693
@@ -24,11 +26,6 @@ URL の代わりに検索ワードを指定すると，ヒットした本をま�
 --output オプションで，保存先を指定できます．指定したディレクトリの下に，書名のディレクトリができます．
 
     kindai.rb http://kindai.ndl.go.jp/info:ndljp/pid/922693 --output ~/Documents/
-
---retry オプションで，ダウンロードのリトライ回数を指定できます．標準では3回です．
-
-    kindai.rb http://kindai.ndl.go.jp/info:ndljp/pid/922693 --retry 10
-
 
 == 本の加工(自動)
 
@@ -60,16 +57,14 @@ URL の代わりに検索ワードを指定すると，ヒットした本をま�
 
 トリミング位置は自動的に決められますが，ダウンロード後に，ずれていることが分かった場合は，publish.rbを使ってトリミング位置を指定できます．
 
-    publish.rb --position 2905x2510+270+190 "~/Documents/正義熱血社 - 正義の叫"
+    kindai.rb publish --position 2905x2510+270+190 "~/Documents/正義熱血社 - 正義の叫"
 
 幅2905ピクセル，高さ2510ピクセル，左の余白270ピクセル，上の余白190ピクセルでトリミングされます．
 
 == 動作環境
 
 * Ruby が必要です．
-* ImageMagick が必要です．
-* Nokogiri と RMagick が必要です，RubyGems でインストールしてください．
-* Gemfile を書いてあるので，bundler が入ってる環境では bundle install コマンドを実行するだけで必要な Gem が入ります．
+* RMagickを使っているので，ImageMagick が必要です．
 
 == その他
 

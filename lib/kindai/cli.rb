@@ -4,6 +4,8 @@ require 'optparse'
 module Kindai
   class CLI
     BANNER = <<EOF
+kindai.rb - the kindai digital library downloader
+
 download:
     by url:     kindai.rb http://kindai.ndl.go.jp/info:ndljp/pid/922693
     by keyword: kindai.rb 調理法
@@ -11,6 +13,8 @@ download:
 publish:
     auto:       kindai.rb publish '~/Desktop/石川，一口；丸山，平次郎 - 講談幽霊の片袖'
     manual:     kindai.rb publish --position 2850x2450+320+380 '~/Desktop/石川，一口；丸山，平次郎 - 講談幽霊の片袖'
+
+options:
 EOF
 
     def self.execute(stdout, arguments=[])
@@ -31,7 +35,7 @@ EOF
         opt.on('--debug', 'enable debug mode') {|v|
           Kindai::Util.debug_mode!
         }
-        opt.on('--retry TIMES', 'retry times (default is 3)') {|v|
+        opt.on('--retry TIMES', 'retry times (default is 30)') {|v|
           config[:retry_count] = v.to_i
         }
         opt.parse!(arguments)
