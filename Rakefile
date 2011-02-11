@@ -20,6 +20,7 @@ Jeweler::Tasks.new do |gem|
   gem.authors = ["hitode909"]
 
   gem.executables = ["kindai.rb"]
+  gem.rdoc_options = ["--main", "README.rdoc", "--exclude", "spec"]
 end
 Jeweler::RubygemsDotOrgTasks.new
 
@@ -42,6 +43,7 @@ Rake::RDocTask.new do |rdoc|
 
   rdoc.rdoc_dir = 'rdoc'
   rdoc.title = "kindai #{version}"
-  rdoc.rdoc_files.include('README*')
-  rdoc.rdoc_files.include('lib/**/*.rb')
+  rdoc.rdoc_files.include('README.rdoc', 'LICENSE.txt', 'lib/**/*.rb')
+  rdoc.main = 'README.rdoc'
 end
+

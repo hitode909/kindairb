@@ -48,6 +48,7 @@ Gem::Specification.new do |s|
   ]
   s.homepage = %q{http://github.com/hitode909/kindairb}
   s.licenses = ["MIT"]
+  s.rdoc_options = ["--main", "README.rdoc", "--exclude", "spec"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.5.2}
   s.summary = %q{kindai digital library downloader}
