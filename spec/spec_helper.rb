@@ -22,4 +22,11 @@ module Kindai::Util
 
     Marshal.load open(cache_file).read
   end
+
+  # require 'logger'
+  # require "stringio"
+  # def self.logger
+  #   Logger.new(StringIO.new)
+  # end
 end
+
