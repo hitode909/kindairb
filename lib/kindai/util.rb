@@ -115,30 +115,8 @@ module Kindai::Util
     return got
   end
 
-  def self.trim_info_auto(book, files)
-    info = nil
-    item = Kindai::Util::Database.item_for_book(book)
-    if item
-      self.logger.info "found trimming info"
-      return {
-        :x      => item.x,
-        :y      => item.y,
-        :width  => item.width,
-        :height => item.height,
-      }
-    end
-
-    info = self.trim_info_by_files(files)
-    self.logger.info "save trimming info"
-    Kindai::Util::Database.save_item(book, info)
-    return info
-  rescue => error
-    self.logger.error "#{error.class}: #{error.message}"
-    info || self.trim_info_by_files(files)
-  end
-
   def self.trim_info_by_files(files)
-    Kindai::Util.logger.info "get trimming info"
+    Kindai::Util.logger.info "get trim info"
     positions = {:x => [], :y => [], :width => [], :height => []}
     files.each{|file|
       pos = trim_info(file)
@@ -154,6 +132,7 @@ module Kindai::Util
     [:x, :y, :width, :height].each{|key|
       good_pos[key] = average(positions[key])
     }
+    Kindai::Util.logger.info "trim position #{good_pos}"
     good_pos
   end
 
