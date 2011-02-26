@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{kindai}
-  s.version = "1.5.1"
+  s.version = "1.6.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["hitode909"]
-  s.date = %q{2011-02-11}
+  s.date = %q{2011-02-26}
   s.default_executable = %q{kindai.rb}
   s.description = %q{kindai.rb is kindai digital library downloader.}
   s.email = %q{hitode909@gmail.com}
@@ -38,6 +38,7 @@ Gem::Specification.new do |s|
     "lib/kindai/spread.rb",
     "lib/kindai/spread_downloader.rb",
     "lib/kindai/util.rb",
+    "lib/kindai/util/database.rb",
     "publish.rb",
     "spec/book_downloader_spec.rb",
     "spec/book_spec.rb",
