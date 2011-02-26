@@ -13,6 +13,7 @@ module Kindai::Interface
     downloader.download
 
     publisher = Kindai::Publisher.new_from_path downloader.book_path
+    publisher.book = book
     publisher.publish_auto
   end
 

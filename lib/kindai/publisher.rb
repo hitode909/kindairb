@@ -2,6 +2,7 @@
 module Kindai
   class Publisher
     attr_accessor :root_path
+    attr_accessor :book
 
     def self.new_from_path(root_path)
       me = self.new
@@ -41,6 +42,7 @@ module Kindai
     def publish
       Kindai::Util.logger.info("publish #{root_path}, #{config(:name)}")
       raise "no name" unless config(:name)
+      self.ensure_book
       if seems_finished?
         Kindai::Util.logger.info("already published")
         return
@@ -56,8 +58,14 @@ module Kindai
     end
 
     def publish_auto
+      self.ensure_book
       self.clone.trim.resize(1280, 960).trim.zip.name('iphone').publish
       self.clone.trim.resize(600, 800).divide.zip.name('kindle').publish
+    end
+
+    def ensure_book
+      @book ||= Kindai::Book.new_from_local_directory(root_path)
+      true
     end
 
     # ------------------------------------
@@ -90,7 +98,8 @@ module Kindai
 
     def trim!(source_path)
       return trim_path if files(source_path).length == files(trim_path).length
-      info = config(:trim).kind_of?(Hash) ? config(:trim) : Kindai::Util.trim_info_by_files(original_files)
+      info = config(:trim).kind_of?(Hash) ? config(:trim) : Kindai::Util.trim_info_auto(book, original_files)
+      Kindai::Util.logger.info "trim position: #{info}"
       files(source_path).each{|file|
         dst = File.join(trim_path, File.basename(file))
         Kindai::Util.trim_file_to(file, dst, info)

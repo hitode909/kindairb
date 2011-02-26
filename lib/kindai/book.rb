@@ -8,7 +8,13 @@ module Kindai
       raise "not info:ndljp" unless permalink_uri.match(/info\:ndljp/)
       me = new
       me.permalink_uri = permalink_uri
-      me
+      return me
+    end
+
+    def self.new_from_local_directory(path)
+      metadata = File.join(path, 'metadata')
+      permalink = open(metadata).read.chomp
+      return self.new_from_permalink(permalink)
     end
 
     # ----- metadata -----

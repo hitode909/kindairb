@@ -15,8 +15,9 @@ module Kindai
     end
 
     def download
-      return false if self.has_file?
       create_directory
+      write_metadata
+      return false if self.has_file?
       download_spreads
       return true
     end
@@ -34,6 +35,16 @@ module Kindai
       success = true
       FileUtils.rm_r(self.book_path) rescue success = false
       return success
+    end
+
+    def write_metadata
+      open(metadata_path, 'w') {|f|
+        f.puts book.permalink_uri
+      }  unless File.exists?(metadata_path)
+    end
+
+    def metadata_path
+      File.join(book_path, 'metadata')
     end
 
     def has_file?
