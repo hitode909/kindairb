@@ -2,12 +2,14 @@
 module Kindai
   class Book
     attr_accessor :permalink_uri
+    attr_accessor :trimming
 
     # ----- constructor -----
-    def self.new_from_permalink(permalink_uri)
+    def self.new_from_permalink(permalink_uri, trimming = {})
       raise "not info:ndljp" unless permalink_uri.match(/info\:ndljp/)
       me = new
       me.permalink_uri = permalink_uri
+      me.trimming = trimming
       return me
     end
 
@@ -46,7 +48,12 @@ module Kindai
 
           page_file = Kindai::Util.fetch_uri page_uri.to_s
           uri = page_file.base_uri.to_s + '&vs=10000,10000,0,0,0,0,0,0'
-#           uri += "&ref=" + [@trimming[:x], @trimming[:y], @trimming[:w], @trimming[:h], 5000, 5000, 0, 0].join(',') if @trimming
+          unless self.trimming.keys.empty?
+            %w{x y w h resize_w resize_h}.map(&:to_sym).each{ |key|
+              self.trimming[key] ||= 0
+            }
+            uri += "&ref=" + [self.trimming[:x], self.trimming[:y], self.trimming[:w], self.trimming[:h], self.trimming[:resize_w], self.trimming[:resize_h], 0, 0].join(',')
+          end
           uri
         end
     end

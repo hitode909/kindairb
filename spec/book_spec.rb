@@ -37,3 +37,30 @@ describe Kindai::Book, 'with series' do
     @book.title.should == '講談日露戦争記［第３冊］第3編'
   end
 end
+
+describe Kindai::Book, 'with trimming' do
+  before do
+
+    @trimming = {:x => 342, :y => 190, :w => 2829, :h => 2485, :resize_w => 900, :resize_h => 900}
+    @book = Kindai::Book.new_from_permalink('http://kindai.ndl.go.jp/info:ndljp/pid/922693', @trimming)
+    @book_normal = Kindai::Book.new_from_permalink('http://kindai.ndl.go.jp/info:ndljp/pid/922693')
+  end
+
+  it 'has trimming' do
+    @book.trimming.should be_kind_of Hash
+    @book.trimming.should == @trimming
+  end
+
+  it 'has base uri including trimming info' do
+    @book.base_uri.should match(/2485/)
+  end
+
+  it 'has different image uri' do
+    @book.spreads.first.uri.should_not == @book_normal.spreads.first.uri
+  end
+
+end
+
+
+
+
