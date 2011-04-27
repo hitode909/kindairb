@@ -15,6 +15,7 @@ module Kindai::Util::Database
         OpenStruct.new(hash)
       rescue => error
         Kindai::Util.logger.warn error
+        nil
       end
     }.compact
   end
