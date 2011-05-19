@@ -3,6 +3,7 @@ source 'http://rubygems.org'
 gem 'nokogiri'
 gem 'rmagick'
 gem 'zipruby'
+gem 'json', '>= 1.4'
 
 group :development do
   gem "rspec", "~> 2.3.0"
