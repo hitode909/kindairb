@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{kindai}
-  s.version = "1.6.2"
+  s.version = "1.7.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["hitode909"]
-  s.date = %q{2011-05-19}
+  s.date = %q{2011-05-24}
   s.default_executable = %q{kindai.rb}
   s.description = %q{kindai.rb is kindai digital library downloader.}
   s.email = %q{hitode909@gmail.com}
@@ -51,7 +51,7 @@ Gem::Specification.new do |s|
   s.licenses = ["MIT"]
   s.rdoc_options = ["--main", "README.rdoc", "--exclude", "spec"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.7}
+  s.rubygems_version = %q{1.5.2}
   s.summary = %q{kindai digital library downloader}
   s.test_files = [
     "spec/book_downloader_spec.rb",
@@ -63,7 +63,6 @@ Gem::Specification.new do |s|
   ]
 
   if s.respond_to? :specification_version then
-    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
