@@ -7,6 +7,7 @@ require 'ostruct'
 module Kindai::Util::Database
   ENDPOINT = URI.parse 'http://gigaschema.appspot.com/hitode909/kindai.json'
 
+  # XXX: deprecated, page 1 only
   def self.items
     @items ||= JSON.parse(open(ENDPOINT).read)['data'].map{|item|
       begin
@@ -21,7 +22,17 @@ module Kindai::Util::Database
   end
 
   def self.item_for_book(book)
-    self.items.find{|item| item.uri == book.permalink_uri}
+    path = ENDPOINT + "?group=#{book.key}"
+    JSON.parse(open(path).read)['data'].map{|item|
+      begin
+        hash = JSON.parse(item['value'])
+        self.validate(hash)
+        OpenStruct.new(hash)
+      rescue => error
+        Kindai::Util.logger.warn error
+        nil
+      end
+    }.compact.first
   end
 
   def self.save_item(book, info)
@@ -45,7 +56,7 @@ module Kindai::Util::Database
 
     res = Net::HTTP.start(ENDPOINT.host, ENDPOINT.port){|http|
       request = Net::HTTP::Post.new(ENDPOINT.path)
-      request.set_form_data({:value => send_data.to_json})
+      request.set_form_data({:value => send_data.to_json, :group => book.key})
       http.request(request)
     }
     case res.code

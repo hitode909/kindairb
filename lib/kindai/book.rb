@@ -20,6 +20,11 @@ module Kindai
     end
 
     # ----- metadata -----
+
+    def key
+      permalink_uri.match(/\d+$/)[0]
+    end
+
     def title
       title_container = control_page.at('.titlehead')
       subtitle_container = control_page.at('.headmenu')

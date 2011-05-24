@@ -6,6 +6,10 @@ describe Kindai::Book do
     @book = Kindai::Book.new_from_permalink('http://kindai.ndl.go.jp/info:ndljp/pid/922693')
   end
 
+  it 'has key' do
+    @book.key.should == "922693"
+  end
+
   it 'has title' do
     @book.title.should == '正義の叫'
   end
