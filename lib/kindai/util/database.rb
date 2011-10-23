@@ -9,7 +9,7 @@ module Kindai::Util::Database
 
   # XXX: deprecated, page 1 only
   def self.items
-    @items ||= JSON.parse(open(ENDPOINT).read)['data'].map{|item|
+    @items ||= JSON.parse(Kindai::Util.fetch_uri(ENDPOINT))['data'].map{|item|
       begin
         hash = JSON.parse(item['value'])
         self.validate(hash)
@@ -23,7 +23,7 @@ module Kindai::Util::Database
 
   def self.item_for_book(book)
     path = ENDPOINT + "?group=#{book.key}"
-    JSON.parse(open(path).read)['data'].map{|item|
+    JSON.parse(Kindai::Util.fetch_uri(path))['data'].map{|item|
       begin
         hash = JSON.parse(item['value'])
         self.validate(hash)
