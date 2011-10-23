@@ -5,15 +5,14 @@
 
 Gem::Specification.new do |s|
   s.name = %q{kindai}
-  s.version = "1.7.0"
+  s.version = "1.7.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["hitode909"]
-  s.date = %q{2011-05-24}
-  s.default_executable = %q{kindai.rb}
+  s.authors = [%q{hitode909}]
+  s.date = %q{2011-10-23}
   s.description = %q{kindai.rb is kindai digital library downloader.}
   s.email = %q{hitode909@gmail.com}
-  s.executables = ["kindai.rb"]
+  s.executables = [%q{kindai.rb}]
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.rdoc"
@@ -48,10 +47,10 @@ Gem::Specification.new do |s|
     "spec/spread_spec.rb"
   ]
   s.homepage = %q{http://github.com/hitode909/kindairb}
-  s.licenses = ["MIT"]
-  s.rdoc_options = ["--main", "README.rdoc", "--exclude", "spec"]
-  s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.5.2}
+  s.licenses = [%q{MIT}]
+  s.rdoc_options = [%q{--main}, %q{README.rdoc}, %q{--exclude}, %q{spec}]
+  s.require_paths = [%q{lib}]
+  s.rubygems_version = %q{1.8.6}
   s.summary = %q{kindai digital library downloader}
   s.test_files = [
     "spec/book_downloader_spec.rb",
