@@ -4,6 +4,7 @@ require 'tempfile'
 require 'digest/sha1'
 require 'RMagick'
 require 'zipruby'
+require 'net/http'
 
 module Kindai::Util
   def self.logger
@@ -113,6 +114,17 @@ module Kindai::Util
       })
     raise "received size unmatch(#{got.bytesize}, #{total})" if got.bytesize != total
     return got
+  end
+
+  def self.get_redirected_uri(uri)
+    uri = URI.parse(uri) unless uri.kind_of? URI
+    self.logger.debug "get_redirected_uri #{uri}"
+
+    response = nil
+    Net::HTTP.start(uri.host, uri.port) {|http|
+      response = http.head(uri.request_uri)
+    }
+    response['Location']
   end
 
   def self.trim_info_auto(book, files)

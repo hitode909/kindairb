@@ -51,8 +51,8 @@ module Kindai
           Kindai::Util.logger.debug "fetch permalink page"
           page_uri = URI.parse(permalink_uri) + permalink_page.at('frame[name="W_BODY"]')['src']
 
-          page_file = Kindai::Util.fetch_uri page_uri.to_s
-          uri = page_file.base_uri.to_s + '&vs=10000,10000,0,0,0,0,0,0'
+          page_base_uri = Kindai::Util.get_redirected_uri page_uri.to_s
+          uri = page_base_uri.to_s + '&vs=10000,10000,0,0,0,0,0,0'
           unless self.trimming.keys.empty?
             %w{x y w h resize_w resize_h}.map(&:to_sym).each{ |key|
               self.trimming[key] ||= 0
