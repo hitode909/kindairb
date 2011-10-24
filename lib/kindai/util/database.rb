@@ -13,7 +13,11 @@ module Kindai::Util::Database
       begin
         hash = JSON.parse(item['value'])
         self.validate(hash)
-        OpenStruct.new(hash)
+
+        hash.each_pair.inject({ }){ |obj, pair|
+          obj[pair.first.to_sym] = pair.last
+          obj
+        }
       rescue => error
         Kindai::Util.logger.warn error
         nil
@@ -27,7 +31,10 @@ module Kindai::Util::Database
       begin
         hash = JSON.parse(item['value'])
         self.validate(hash)
-        OpenStruct.new(hash)
+        hash.each_pair.inject({ }){ |obj, pair|
+          obj[pair.first.to_sym] = pair.last
+          obj
+        }
       rescue => error
         Kindai::Util.logger.warn error
         nil
@@ -37,7 +44,7 @@ module Kindai::Util::Database
 
   def self.save_item(book, info)
     previous_item = self.item_for_book(book)
-    if previous_item and previous_item.version >= Kindai::VERSION
+    if previous_item and previous_item[:version] >= Kindai::VERSION
       Kindai::Util.logger.warn "Database has newer version of #{book.title}. To save, delete it first."
       return false
     end

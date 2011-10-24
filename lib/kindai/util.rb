@@ -133,10 +133,10 @@ module Kindai::Util
     if item
       self.logger.info "found trimming info"
       return {
-        :x      => item.x,
-        :y      => item.y,
-        :width  => item.width,
-        :height => item.height,
+        :x      => item[:x],
+        :y      => item[:y],
+        :width  => item[:width],
+        :height => item[:height],
       }
     end
 
