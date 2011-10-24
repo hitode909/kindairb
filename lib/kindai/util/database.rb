@@ -2,7 +2,6 @@
 require 'open-uri'
 require 'net/http'
 require 'json'
-require 'ostruct'
 
 module Kindai::Util::Database
   ENDPOINT = URI.parse 'http://gigaschema.appspot.com/hitode909/kindai.json'
