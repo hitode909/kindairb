@@ -38,6 +38,15 @@ EOF
         opt.on('--retry TIMES', 'retry times (default is 30)') {|v|
           config[:retry_count] = v.to_i
         }
+        opt.on('--publish_iphone', 'publish for iphone') {|v|
+          config[:publish_iphone] = true
+        }
+        opt.on('--publish_kindle', 'publish for kindle') {|v|
+          config[:publish_kindle] = true
+        }
+        opt.on('--no_trimming', "don't trimming") {|v|
+          config[:no_trimming] = true
+        }
         opt.parse!(arguments)
       }
 

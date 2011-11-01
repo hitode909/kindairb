@@ -14,7 +14,16 @@ module Kindai::Interface
 
     publisher = Kindai::Publisher.new_from_path downloader.book_path
     publisher.book = book
-    publisher.publish_auto
+
+    if config[:no_trimming]
+      return
+    elsif config[:publish_iphone] || config[:publish_kindle]
+      publisher.publish_for_iphone if config[:publish_iphone]
+      publisher.publish_for_kindle if config[:publish_kindle]
+    else
+      publisher.publish_default
+    end
+
   end
 
   def self.download_keyword(keyword, config = { })
