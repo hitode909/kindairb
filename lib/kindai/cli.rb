@@ -41,6 +41,9 @@ EOF
         opt.on('--publish_iphone', 'publish for iphone') {|v|
           config[:publish_iphone] = true
         }
+        opt.on('--publish_ipad', 'publish for ipad') {|v|
+          config[:publish_ipad] = true
+        }
         opt.on('--publish_kindle', 'publish for kindle') {|v|
           config[:publish_kindle] = true
         }

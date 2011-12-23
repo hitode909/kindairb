@@ -17,8 +17,9 @@ module Kindai::Interface
 
     if config[:no_trimming]
       return
-    elsif config[:publish_iphone] || config[:publish_kindle]
+    elsif config[:publish_iphone] || config[:publish_ipad] || config[:publish_kindle]
       publisher.publish_for_iphone if config[:publish_iphone]
+      publisher.publish_for_ipad   if config[:publish_ipad]
       publisher.publish_for_kindle if config[:publish_kindle]
     else
       publisher.publish_default

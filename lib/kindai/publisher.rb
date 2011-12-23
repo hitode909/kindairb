@@ -73,6 +73,11 @@ module Kindai
       self.clone.trim.resize(1280, 960).trim.zip.name('iphone').publish
     end
 
+    def publish_for_ipad
+      self.ensure_book
+      self.clone.trim.resize(768*2, 1024).trim.zip.name('ipad').publish
+    end
+
     def publish_for_kindle
       self.ensure_book
       self.clone.trim.resize(600, 800).divide.zip.name('kindle').publish
