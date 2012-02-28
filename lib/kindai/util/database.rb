@@ -60,7 +60,10 @@ module Kindai::Util::Database
     }
     self.validate(send_data)
 
-    res = Net::HTTP.start(ENDPOINT.host, ENDPOINT.port){|http|
+    proxy_uri = URI.parse(ENV["http_proxy"] || ENV["HTTP_PROXY"] || "")
+    proxy_user, proxy_pass = proxy.userinfo.split(/:/) if proxy_uri.userinfo
+    res = Net::HTTP.Proxy(proxy_uri.host, proxy_uri.port,
+                          proxy_user, proxy_pass).start(ENDPOINT.host, ENDPOINT.port){|http|
       request = Net::HTTP::Post.new(ENDPOINT.path)
       request.set_form_data({:value => send_data.to_json, :group => book.key})
       http.request(request)
