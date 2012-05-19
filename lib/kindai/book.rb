@@ -2,14 +2,12 @@
 module Kindai
   class Book
     attr_accessor :permalink_uri
-    attr_accessor :trimming
 
     # ----- constructor -----
-    def self.new_from_permalink(permalink_uri, trimming = {})
+    def self.new_from_permalink(permalink_uri)
       raise "not info:ndljp: #{permalink_uri}" unless permalink_uri.match(/info\:ndljp/)
       me = new
       me.permalink_uri = permalink_uri
-      me.trimming = trimming
       return me
     end
 
@@ -19,7 +17,7 @@ module Kindai
       return self.new_from_permalink(permalink)
     end
 
-    def self.new_from_search_result_uri(search_result_uri, trimming = {})
+    def self.new_from_search_result_uri(search_result_uri)
       raise "not iss.ndl.go.jp: #{search_result_uri}" unless search_result_uri.match(/iss\.ndl\.go\.jp/)
       me = new
       me.permalink_uri = self.get_permalink_from_search_result_uri search_result_uri
