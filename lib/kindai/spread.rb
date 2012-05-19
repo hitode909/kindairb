@@ -13,20 +13,16 @@ module Kindai
     end
 
     def uri
-      book.base_uri.gsub(/koma=(\d+)/) { "koma=#{spread_number}" }
+      "#{book.permalink_uri}/#{spread_number.to_s}"
     end
 
     def image_uri
-      image = page.at("img#imMain")
-      raise "not exists" unless image
-      image['src']
-    end
-
-
-    def has_local_file?
-    end
-
-    def local_file_path
+      params = {
+        :itemId => "info:ndljp/pid/#{book.key}",
+        :contentNo => spread_number,
+        :outputScale => 1,
+      }
+      "http://kindai.ndl.go.jp/view/jpegOutput?" + Kindai::Util.expand_params(params)
     end
 
     # protected

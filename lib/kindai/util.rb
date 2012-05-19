@@ -54,7 +54,8 @@ module Kindai::Util
   # input:  {:a => 'a', :b => 'bbb'}
   # output: 'a=a&b=bbb
   def self.expand_params(params)
-    params.each_pair.map{ |k, v| [URI.escape(k.to_s), URI.escape(v.to_s)].join('=')}.join('&')
+    URI.encode_www_form(params)
+  # params.each_pair.map{ |k, v| [URI.escape(k.to_s), URI.escape(v.to_s)].join('=')}.join('&')
   end
 
   def self.append_suffix(path, suffix)

@@ -16,11 +16,11 @@ describe Kindai::Spread do
   end
 
   it 'has uri' do
-    @spread.uri.should == "http://kindai.da.ndl.go.jp/scrpt/ndlimageviewer-rgc.aspx?pid=info%3Andljp%2Fpid%2F922693&jp=42016454&vol=10010&koma=5&vs=10000,10000,0,0,0,0,0,0"
+    @spread.uri.should == 'http://kindai.ndl.go.jp/info:ndljp/pid/922693/5'
   end
 
   it 'has image_uri' do
-    @spread.image_uri.should match /http:\/\/kindai.da.ndl.go.jp\/JPEG\/\w+\.jpg/
+    @spread.image_uri.should == "http://kindai.ndl.go.jp/view/jpegOutput?itemId=info%3Andljp%2Fpid%2F922693&contentNo=5&outputScale=1"
   end
 
 end
