@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 module Kindai
   class Book
-    attr_accessor :permalink_uri
 
     # ----- constructor -----
     def self.new_from_permalink(permalink_uri)
       raise "not info:ndljp: #{permalink_uri}" unless permalink_uri.match(/info\:ndljp/)
       me = new
-      me.permalink_uri = permalink_uri
+      me.instance_eval {
+        @permalink_uri = permalink_uri
+      }
       return me
     end
 
@@ -20,11 +21,20 @@ module Kindai
     def self.new_from_search_result_uri(search_result_uri)
       raise "not iss.ndl.go.jp: #{search_result_uri}" unless search_result_uri.match(/iss\.ndl\.go\.jp/)
       me = new
-      me.permalink_uri = self.get_permalink_from_search_result_uri search_result_uri
+      me.instance_eval {
+        @search_result_uri = search_result_uri
+      }
       me
     end
 
     # ----- metadata -----
+
+    def permalink_uri
+      @permalink_uri ||=
+        begin
+          get_permalink_from_search_result_uri
+        end
+    end
 
     def key
       permalink_uri.match(/\d+$/)[0]
@@ -86,8 +96,9 @@ module Kindai
         end
     end
 
-    def self.get_permalink_from_search_result_uri(permalink_uri)
-      page = Nokogiri Kindai::Util.fetch_uri permalink_uri
+    def get_permalink_from_search_result_uri
+      "search_result_uri is required" unless @search_result_uri
+      page = Nokogiri Kindai::Util.fetch_uri @search_result_uri
       a = page.at "#reviewsites a[href^='http://kindai.da.ndl.go.jp/info:ndljp/pid/']"
       a['href']
     end
