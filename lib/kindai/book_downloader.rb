@@ -64,9 +64,14 @@ module Kindai
     end
 
     def download_spreads
-      self.spread_downloaders.each{|dl|
+      is_first = true
+      self.spread_downloaders.each{ |dl|
+        next if dl.has_file?
+        sleep 30 unless is_first
+        is_first = false
         dl.download
       }
+
       return true
     end
   end

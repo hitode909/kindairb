@@ -56,7 +56,7 @@ module Kindai
 
         Kindai::Util.logger.info "sleep and retry"
         failed_count += 1
-        sleep 10
+        sleep 30
         retry
       end
     end
