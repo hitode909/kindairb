@@ -20,7 +20,7 @@ module Kindai
         uris = result_for(@keyword, page)
         return if uris.empty?
         uris.each{ |uri|
-          yield Kindai::Book.new_from_permalink(uri)
+          yield Kindai::Book.new_from_search_result_uri(uri)
         }
       }
     end
@@ -42,7 +42,7 @@ module Kindai
     end
 
     def uri_for keyword, page = 0
-      count = 10
+      count = 100
       params = { :any => keyword, :dpid => 'kindai', :idx => page * count + 1, :cnt => count}
       root = URI.parse("http://iss.ndl.go.jp/api/opensearch")
       path = '?' + Kindai::Util.expand_params(params)
