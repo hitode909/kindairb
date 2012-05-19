@@ -51,24 +51,6 @@ module Kindai
       @spreads ||= 1.upto(self.total_spread).map{|i| self.spread_at(i) }
     end
 
-    def base_uri
-      @base_uri ||=
-        begin
-          Kindai::Util.logger.debug "fetch permalink page"
-          page_uri = URI.parse(permalink_uri) + permalink_page.at('frame[name="W_BODY"]')['src']
-
-          page_base_uri = Kindai::Util.get_redirected_uri page_uri.to_s
-          uri = page_base_uri.to_s + '&vs=10000,10000,0,0,0,0,0,0'
-          unless self.trimming.keys.empty?
-            %w{x y w h resize_w resize_h}.map(&:to_sym).each{ |key|
-              self.trimming[key] ||= 0
-            }
-            uri += "&ref=" + [self.trimming[:x], self.trimming[:y], self.trimming[:w], self.trimming[:h], self.trimming[:resize_w], self.trimming[:resize_h], 0, 0].join(',')
-          end
-          uri
-        end
-    end
-
     protected
 
     def metadata_like query
@@ -103,37 +85,6 @@ module Kindai
           Kindai::Util.logger.debug "fetch permalink page"
           page = Kindai::Util.fetch_uri permalink_uri rescue Kindai::Util.fetch_uri URI.escape(permalink_uri)
           Nokogiri page
-        end
-    end
-
-    def detail_uri
-      root = URI.parse('http://kindai.ndl.go.jp/BIBibDetail.php')
-      params = { }
-      control_page.search('input').each{ |input|
-        params[input['name']] = input['value'] if input['value']
-      }
-      path = '?' + params.each_pair.map{ |k, v| [URI.escape(k), URI.escape(v)].join('=')}.join('&')
-      root + path
-    end
-
-    def detail_page
-      @detail_page ||=
-        begin
-          Kindai::Util.logger.debug "fetch detail page"
-          page = Kindai::Util.fetch_uri detail_uri rescue Kindai::Util.fetch_uri URI.escape(detail_uri)
-          Nokogiri page
-        end
-    end
-
-    def control_uri
-      URI.parse(permalink_uri) + permalink_page.at('frame[name="W_CONTROL"]')['src']
-    end
-
-    def control_page
-      @control_page ||=
-        begin
-          Kindai::Util.logger.debug "fetch permalink page"
-          Nokogiri Kindai::Util.fetch_uri control_uri
         end
     end
 
