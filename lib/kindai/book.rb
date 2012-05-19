@@ -19,6 +19,13 @@ module Kindai
       return self.new_from_permalink(permalink)
     end
 
+    def self.new_from_search_result_uri(search_result_uri, trimming = {})
+      raise "not iss.ndl.go.jp: #{search_result_uri}" unless search_result_uri.match(/iss\.ndl\.go\.jp/)
+      me = new
+      me.permalink_uri = self.get_permalink_from_search_result_uri search_result_uri
+      me
+    end
+
     # ----- metadata -----
 
     def key
@@ -26,19 +33,18 @@ module Kindai
     end
 
     def title
-      title_container = control_page.at('.titlehead')
-      subtitle_container = control_page.at('.headmenu')
-      title_string = title_container.content.strip
-      title_string += subtitle_container.content.strip if subtitle_container
-      title_string
+      main = metadata_like 'title'
+
+      sub = metadata_like('volumeTranscription').to_i.to_s rescue nil
+      sub ? main + sub : main
     end
 
     def author
-      metadata['著者標目']
+      metadata_like 'creator:NDLNH'
     end
 
     def total_spread
-      self.spread_at(1).page.search('select#dlPages option').length
+      permalink_page.search('#sel-content-no option').length
     end
 
     def spreads
@@ -65,6 +71,15 @@ module Kindai
 
     protected
 
+    def metadata_like query
+      query_regexp = Regexp.new(Regexp.quote("(#{ query })"))
+      key = metadata.keys.find{ |key|
+        key =~ query_regexp
+      }
+      raise "metadata like #{query} not found" unless key
+      metadata[key]
+    end
+
     def spread_at(spread_number)
       Kindai::Spread.new_from_book_and_spread_number(self, spread_number)
     end
@@ -72,14 +87,12 @@ module Kindai
     def metadata
       @metadata ||=
         begin
-          metadata_table = detail_page.search('table').find{ |table|
-            table.at('td').text == 'タイトル'
+          dts = permalink_page.search('dl.detail-metadata-list dt').map{ |tag| tag.text }
+          dds = permalink_page.search('dl.detail-metadata-list dd').map{ |tag| tag.text }
+          dts.zip(dds).inject({ }) { |table, tupple|
+            table[tupple.first.strip] = tupple.last.strip
+            table
         }
-          metadata_table.search('tr').inject({ }) { |prev, tr|
-            key, _, value = *tr.search('td').map{ |elem| elem.text }
-            prev[key] = value
-            prev
-          }
         end
     end
 
@@ -122,6 +135,12 @@ module Kindai
           Kindai::Util.logger.debug "fetch permalink page"
           Nokogiri Kindai::Util.fetch_uri control_uri
         end
+    end
+
+    def self.get_permalink_from_search_result_uri(permalink_uri)
+      page = Nokogiri Kindai::Util.fetch_uri permalink_uri
+      a = page.at "#reviewsites a[href^='http://kindai.da.ndl.go.jp/info:ndljp/pid/']"
+      a['href']
     end
 
   end
