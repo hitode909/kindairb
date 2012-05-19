@@ -44,7 +44,7 @@ module Kindai
     def uri_for keyword, page = 0
       count = 10
       params = { :any => keyword, :dpid => 'kindai', :idx => page * count + 1, :cnt => count}
-      root = URI.parse("http://api.porta.ndl.go.jp/servicedp/opensearch")
+      root = URI.parse("http://iss.ndl.go.jp/api/opensearch")
       path = '?' + Kindai::Util.expand_params(params)
       root + path
     end
