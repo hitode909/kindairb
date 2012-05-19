@@ -6,7 +6,7 @@ module Kindai
 
     # ----- constructor -----
     def self.new_from_permalink(permalink_uri, trimming = {})
-      raise "not info:ndljp" unless permalink_uri.match(/info\:ndljp/)
+      raise "not info:ndljp: #{permalink_uri}" unless permalink_uri.match(/info\:ndljp/)
       me = new
       me.permalink_uri = permalink_uri
       me.trimming = trimming
