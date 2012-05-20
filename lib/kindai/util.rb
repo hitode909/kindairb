@@ -121,7 +121,10 @@ module Kindai::Util
     self.logger.debug "get_redirected_uri #{uri}"
 
     response = nil
-    Net::HTTP.start(uri.host, uri.port) {|http|
+    proxy_uri = URI.parse(ENV["http_proxy"] || ENV["HTTP_PROXY"] || "")
+    proxy_user, proxy_pass = proxy.userinfo.split(/:/) if proxy_uri.userinfo
+    Net::HTTP.Proxy(proxy_uri.host, proxy_uri.port,
+                    proxy_user, proxy_pass).start(uri.host, uri.port) {|http|
       response = http.head(uri.request_uri)
     }
     response['Location']
