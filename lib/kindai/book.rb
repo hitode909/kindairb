@@ -50,7 +50,13 @@ module Kindai
     def author
       metadata_like 'creator:NDLNH'
     rescue
+      alt_author
+    end
+    
+    def alt_author
       metadata_like 'creator'
+    rescue
+      metadata_like 'publisher'
     end
 
     def total_spread
