@@ -4,15 +4,15 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{kindai}
-  s.version = "2.1.2"
+  s.name = "kindai"
+  s.version = "2.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = [%q{hitode909}]
-  s.date = %q{2012-09-14}
-  s.description = %q{kindai.rb is kindai digital library downloader.}
-  s.email = %q{hitode909@gmail.com}
-  s.executables = [%q{kindai.rb}]
+  s.authors = ["hitode909"]
+  s.date = "2013-03-13"
+  s.description = "kindai.rb is kindai digital library downloader."
+  s.email = "hitode909@gmail.com"
+  s.executables = ["kindai.rb"]
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.rdoc"
@@ -46,51 +46,43 @@ Gem::Specification.new do |s|
     "spec/spread_downloader_spec.rb",
     "spec/spread_spec.rb"
   ]
-  s.homepage = %q{http://github.com/hitode909/kindairb}
-  s.licenses = [%q{MIT}]
-  s.rdoc_options = [%q{--main}, %q{README.rdoc}, %q{--exclude}, %q{spec}]
-  s.require_paths = [%q{lib}]
-  s.rubygems_version = %q{1.8.6}
-  s.summary = %q{kindai digital library downloader}
-  s.test_files = [
-    "spec/book_downloader_spec.rb",
-    "spec/book_spec.rb",
-    "spec/searcher_spec.rb",
-    "spec/spec_helper.rb",
-    "spec/spread_downloader_spec.rb",
-    "spec/spread_spec.rb"
-  ]
+  s.homepage = "http://github.com/hitode909/kindairb"
+  s.licenses = ["MIT"]
+  s.rdoc_options = ["--main", "README.rdoc", "--exclude", "spec"]
+  s.require_paths = ["lib"]
+  s.rubygems_version = "1.8.25"
+  s.summary = "kindai digital library downloader"
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<nokogiri>, [">= 0"])
-      s.add_runtime_dependency(%q<rmagick>, [">= 0"])
+      s.add_runtime_dependency(%q<rmagick>, ["= 2.13.2"])
       s.add_runtime_dependency(%q<zipruby>, [">= 0"])
       s.add_runtime_dependency(%q<json>, [">= 1.4"])
       s.add_development_dependency(%q<rspec>, ["~> 2.3.0"])
-      s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
-      s.add_development_dependency(%q<jeweler>, ["~> 1.5.2"])
+      s.add_development_dependency(%q<bundler>, ["= 1.3.2"])
+      s.add_development_dependency(%q<jeweler>, ["= 1.8.4"])
       s.add_development_dependency(%q<rcov>, [">= 0"])
     else
       s.add_dependency(%q<nokogiri>, [">= 0"])
-      s.add_dependency(%q<rmagick>, [">= 0"])
+      s.add_dependency(%q<rmagick>, ["= 2.13.2"])
       s.add_dependency(%q<zipruby>, [">= 0"])
       s.add_dependency(%q<json>, [">= 1.4"])
       s.add_dependency(%q<rspec>, ["~> 2.3.0"])
-      s.add_dependency(%q<bundler>, ["~> 1.0.0"])
-      s.add_dependency(%q<jeweler>, ["~> 1.5.2"])
+      s.add_dependency(%q<bundler>, ["= 1.3.2"])
+      s.add_dependency(%q<jeweler>, ["= 1.8.4"])
       s.add_dependency(%q<rcov>, [">= 0"])
     end
   else
     s.add_dependency(%q<nokogiri>, [">= 0"])
-    s.add_dependency(%q<rmagick>, [">= 0"])
+    s.add_dependency(%q<rmagick>, ["= 2.13.2"])
     s.add_dependency(%q<zipruby>, [">= 0"])
     s.add_dependency(%q<json>, [">= 1.4"])
     s.add_dependency(%q<rspec>, ["~> 2.3.0"])
-    s.add_dependency(%q<bundler>, ["~> 1.0.0"])
-    s.add_dependency(%q<jeweler>, ["~> 1.5.2"])
+    s.add_dependency(%q<bundler>, ["= 1.3.2"])
+    s.add_dependency(%q<jeweler>, ["= 1.8.4"])
     s.add_dependency(%q<rcov>, [">= 0"])
   end
 end
