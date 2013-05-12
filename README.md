@@ -81,18 +81,18 @@ kindai.rb publish --position 2905x2510+270+190 "~/Documents/正義熱血社 - �
 
 幅2905ピクセル，高さ2510ピクセル，左の余白270ピクセル，上の余白190ピクセルでトリミングされます．
 
-== 動作環境
+## 動作環境
 
 - Ruby が必要です．
 - RMagickを使っているので，ImageMagick が必要です．
 
-== その他
+## その他
 
 国立国会図書館デジタルアーカイブポータル（PORTA）外部提供インタフェースを利用しています．
 
 [Wiki: 外部提供インタフェースについて](http://porta.ndl.go.jp/wiki/Wiki.jsp?page=%E5%A4%96%E9%83%A8%E6%8F%90%E4%BE%9B%E3%82%A4%E3%83%B3%E3%82%BF%E3%83%95%E3%82%A7%E3%83%BC%E3%82%B9%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
 
-== Copyright
+## Copyright
 
 Copyright (c) 2011 hitode909. See LICENSE.txt for
 further details.
