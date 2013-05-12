@@ -41,8 +41,8 @@ kindai.rb http://kindai.ndl.go.jp/info:ndljp/pid/922693 --output ~/Documents/
 
 起動時の引数で，ダウンロードした本を iPhone 用と Kindle 用に加工することができます．
 
-- publish_iphone オプションで，iPhone用のファイルを作ります．
-- publish_kindle オプションで，Kindle用のファイルを作ります．
+ --publish_iphone オプションで，iPhone用のファイルを作ります．
+ --publish_kindle オプションで，Kindle用のファイルを作ります．
 
 両方指定すると，以下のようなファイル構成になります．
 
