@@ -1,4 +1,4 @@
-= kindai.rb
+= kindai.rb [![Build Status](https://travis-ci.org/hitode909/kindairb.png?branch=master)](https://travis-ci.org/hitode909/kindairb)
 
 == 概要
 
