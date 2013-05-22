@@ -37,10 +37,3 @@ describe Kindai::Book, 'with series' do
     @book.title.should == '講談日露戦争記3'
   end
 end
-
-describe Kindai::Book, 'from without any uri' do
-  it 'will die' do
-    empty_book = Kindai::Book.new
-    lambda { empty_book.permalink_uri }.should raise_error Exception
-  end
-end
