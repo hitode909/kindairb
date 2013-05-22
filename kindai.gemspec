@@ -5,23 +5,24 @@
 
 Gem::Specification.new do |s|
   s.name = "kindai"
-  s.version = "2.3.0"
+  s.version = "2.4.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["hitode909"]
-  s.date = "2013-03-22"
+  s.date = "2013-05-22"
   s.description = "kindai.rb is kindai digital library downloader."
   s.email = "hitode909@gmail.com"
   s.executables = ["kindai.rb"]
   s.extra_rdoc_files = [
     "LICENSE.txt",
-    "README.rdoc"
+    "README.md"
   ]
   s.files = [
+    ".travis.yml",
     "Gemfile",
     "Gemfile.lock",
     "LICENSE.txt",
-    "README.rdoc",
+    "README.md",
     "Rakefile",
     "VERSION",
     "bin/kindai.rb",
