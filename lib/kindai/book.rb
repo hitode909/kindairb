@@ -18,22 +18,10 @@ module Kindai
       return self.new_from_permalink(permalink)
     end
 
-    def self.new_from_search_result_uri(search_result_uri)
-      raise "not iss.ndl.go.jp: #{search_result_uri}" unless search_result_uri.match(/iss\.ndl\.go\.jp/)
-      me = new
-      me.instance_eval {
-        @search_result_uri = search_result_uri
-      }
-      me
-    end
-
     # ----- metadata -----
 
     def permalink_uri
-      @permalink_uri ||=
-        begin
-          get_permalink_from_search_result_uri
-        end
+      @permalink_uri
     end
 
     def key
@@ -102,13 +90,6 @@ module Kindai
           page = Kindai::Util.fetch_uri permalink_uri rescue Kindai::Util.fetch_uri URI.escape(permalink_uri)
           Nokogiri page
         end
-    end
-
-    def get_permalink_from_search_result_uri
-      "search_result_uri is required" unless @search_result_uri
-      page = Nokogiri Kindai::Util.fetch_uri @search_result_uri
-      a = page.at "#reviewsites a[href^='http://kindai.da.ndl.go.jp/info:ndljp/pid/']"
-      a['href']
     end
 
   end

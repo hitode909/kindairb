@@ -1,23 +1,5 @@
-# -*- coding: utf-8 -*-
+# encoding: utf-8
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
-
-describe Kindai::Book, 'from search result uri' do
-  before do
-    @book = Kindai::Book.new_from_search_result_uri('http://iss.ndl.go.jp/books/R000000008-I000162417-00')
-  end
-
-  it 'is a book' do
-    @book.should be_kind_of Kindai::Book
-  end
-
-  it 'has permalink' do
-    @book.permalink_uri.should == 'http://kindai.da.ndl.go.jp/info:ndljp/pid/922693'
-  end
-
-  it 'has key' do
-    @book.key.should == "922693"
-  end
-end
 
 describe Kindai::Book do
   before do
