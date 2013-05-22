@@ -8,6 +8,7 @@ Gem::Specification.new do |s|
   s.version = "2.4.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
+  s.required_ruby_version = '>= 1.9.1'
   s.authors = ["hitode909"]
   s.date = "2013-05-22"
   s.description = "kindai.rb is kindai digital library downloader."
