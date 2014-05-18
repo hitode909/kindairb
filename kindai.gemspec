@@ -65,7 +65,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<json>, [">= 1.4"])
       s.add_development_dependency(%q<rspec>, [">= 2.13.0"])
       s.add_development_dependency(%q<bundler>, ["= 1.6.2"])
-      s.add_development_dependency(%q<jeweler>, ["= 1.8.4"])
+      s.add_development_dependency(%q<jeweler>, [">= 2.0.1"])
     else
       s.add_dependency(%q<nokogiri>, [">= 0"])
       s.add_dependency(%q<rmagick>, ["= 2.13.2"])
@@ -73,7 +73,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<json>, [">= 1.4"])
       s.add_dependency(%q<rspec>, [">= 2.13.0"])
       s.add_dependency(%q<bundler>, ["= 1.6.2"])
-      s.add_dependency(%q<jeweler>, ["= 1.8.4"])
+      s.add_dependency(%q<jeweler>, [">= 2.0.1"])
     end
   else
     s.add_dependency(%q<nokogiri>, [">= 0"])
@@ -82,7 +82,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<json>, [">= 1.4"])
     s.add_dependency(%q<rspec>, [">= 2.13.0"])
     s.add_dependency(%q<bundler>, ["= 1.6.2"])
-    s.add_dependency(%q<jeweler>, ["= 1.8.4"])
+    s.add_dependency(%q<jeweler>, [">= 2.0.1"])
   end
 end
 
