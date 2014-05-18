@@ -19,10 +19,10 @@ describe Kindai::BookDownloader do
 
   it 'has base path' do
     @downloader.base_path = "/path/to/library"
-    @downloader.book_path.should == "/path/to/library/正義熱血社 - 正義の叫"
+    @downloader.book_path.should == "/path/to/library/正義熱血社出版部 - 正義の叫"
 
     @downloader.base_path = "/path/to/library/"
-    @downloader.book_path.should == "/path/to/library/正義熱血社 - 正義の叫"
+    @downloader.book_path.should == "/path/to/library/正義熱血社出版部 - 正義の叫"
   end
 
   it 'can download book' do

@@ -19,7 +19,7 @@ describe Kindai::Book do
   end
 
   it 'has author' do
-    @book.author.should == '正義熱血社'
+    @book.author.should == "正義熱血社出版部"
   end
 
   it 'has spreads' do
