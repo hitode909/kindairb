@@ -2,7 +2,7 @@
 require 'open3'
 require 'tempfile'
 require 'digest/sha1'
-require 'RMagick'
+require 'rmagick'
 require 'zipruby'
 require 'net/http'
 
