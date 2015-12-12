@@ -23,7 +23,7 @@ module Kindai
     end
 
     def book_path
-      path = File.join(self.base_path, [@book.author, @book.title].compact.join(' - '))
+      path = File.join(self.base_path, [@book.key, @book.author, @book.title].compact.join(' - '))
       File.expand_path path
     end
 
