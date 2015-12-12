@@ -45,7 +45,7 @@ module Kindai
       failed_count = 0
 
       begin
-        Kindai::Util.logger.info "downloading " + [self.spread.book.author, self.spread.book.title, "spread #{self.spread.spread_number} / #{self.spread.book.total_spread}"].join(' - ')
+        Kindai::Util.logger.info "downloading " + [self.spread.book.key, self.spread.book.author, self.spread.book.title, "spread #{self.spread.spread_number} / #{self.spread.book.total_spread}"].join(' - ')
         Kindai::Util.rich_download(spread.image_uri, self.spread_path)
       rescue Interrupt => err
         Kindai::Util.logger.error "#{err.class}: #{err.message}"
