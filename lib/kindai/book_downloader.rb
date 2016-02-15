@@ -22,8 +22,12 @@ module Kindai
       return true
     end
 
+    def safe_filename filename
+      filename.gsub(File::SEPARATOR, '_')
+    end
+
     def book_path
-      path = File.join(self.base_path, [@book.author, @book.title].compact.join(' - '))
+      path = File.join(self.base_path, safe_filename([@book.author, @book.title].compact.join(' - ')))
       File.expand_path path
     end
 
