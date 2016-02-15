@@ -29,7 +29,13 @@ module Kindai
     end
 
     def title
-      "#{metadata_like 'title'}#{volume_number}"
+      base = "#{metadata_like 'title'}#{volume_number}"
+
+      if edition
+        base += "(#{edition})"
+      end
+
+      base
     end
 
     def volume_number
@@ -45,6 +51,12 @@ module Kindai
       rescue
       end
 
+      nil
+    end
+
+    def edition
+      return metadata_like('edition')
+    rescue
       nil
     end
 

@@ -59,3 +59,24 @@ describe Kindai::Book, 'with volume' do
     @book.title.should == '漢籍国字解全書 : 先哲遺著追補36'
   end
 end
+
+describe Kindai::Book, 'with edition' do
+  before do
+    @book1 = Kindai::Book.new_from_permalink('http://kindai.ndl.go.jp/info:ndljp/pid/951217')
+    @book2 = Kindai::Book.new_from_permalink('http://kindai.ndl.go.jp/info:ndljp/pid/951218')
+    @book3 = Kindai::Book.new_from_permalink('http://kindai.ndl.go.jp/info:ndljp/pid/951219')
+  end
+
+  it 'has edition' do
+    @book1.edition.should == nil
+    @book2.edition.should == '補再版'
+    @book3.edition.should == '補3版'
+  end
+
+  it 'appends edition to title' do
+    @book1.title.should == '千山万岳'
+    @book2.title.should == '千山万岳(補再版)'
+    @book3.title.should == '千山万岳(補3版)'
+  end
+
+end
