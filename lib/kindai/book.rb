@@ -29,10 +29,23 @@ module Kindai
     end
 
     def title
-      main = metadata_like 'title'
+      "#{metadata_like 'title'}#{volume_number}"
+    end
 
-      sub = metadata_like('volumeTranscription').to_i.to_s rescue nil
-      sub ? main + sub : main
+    def volume_number
+      # 0036 とか
+      begin
+        return metadata_like('volumeTranscription').to_i
+      rescue
+      end
+
+      # 第36巻 とか
+      begin
+        return metadata_like('volume').scan(/\d+/).first.to_i
+      rescue
+      end
+
+      nil
     end
 
     def author
@@ -40,7 +53,7 @@ module Kindai
     rescue
       alt_author
     end
-    
+
     def alt_author
       metadata_like 'creator'
     rescue
