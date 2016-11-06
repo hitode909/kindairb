@@ -5,6 +5,7 @@ require 'digest/sha1'
 require 'rmagick'
 require 'zipruby'
 require 'net/http'
+require 'uri'
 
 module Kindai::Util
   def self.logger
@@ -91,6 +92,12 @@ module Kindai::Util
     Dir.chdir(directory)
     execute_and_log "zip -q -r '../#{File.basename(directory)}.zip' *jpg"
     Dir.chdir(from)
+  end
+
+  def self.normalize_permalink_uri(uri_string)
+    uri = URI.parse(uri_string)
+    uri.host = 'dl.ndl.go.jp'
+    uri.to_s
   end
 
   def self.fetch_uri(uri, rich = false)
