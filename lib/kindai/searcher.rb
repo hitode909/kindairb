@@ -37,14 +37,14 @@ module Kindai
     def result_for keyword, page = 1
       page = Nokogiri Kindai::Util.fetch_uri(uri_for(keyword, page))
       page.search('a.item-link').map{ |item|
-        'http://kindai.ndl.go.jp' + item.attr('href')
+        'http://dl.ndl.go.jp' + item.attr('href')
       }
     end
 
     def uri_for keyword, page = 1
       rows = 100
-      params = { :SID => 'kindai', :searchWord => keyword, :pageNo => page, :rows => rows }
-      root = URI.parse("http://kindai.ndl.go.jp/search/searchResult")
+      params = { :SID => 'kindai', :viewRestricted => 0, :searchWord => keyword, :pageNo => page, :rows => rows }
+      root = URI.parse("http://dl.ndl.go.jp/search/searchResult")
       query = '?' + Kindai::Util.expand_params(params)
       root + query
     end
