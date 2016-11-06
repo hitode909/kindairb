@@ -22,7 +22,7 @@ module Kindai
         :contentNo => spread_number,
         :outputScale => 1,
       }
-      "http://kindai.ndl.go.jp/view/jpegOutput?" + Kindai::Util.expand_params(params)
+      "http://dl.ndl.go.jp/view/jpegOutput?" + Kindai::Util.expand_params(params)
     end
 
     # protected
