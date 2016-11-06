@@ -65,13 +65,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (>= 1.13.6)
-  jeweler (>= 2.1.2)
-  json (>= 1.4)
-  nokogiri
-  rmagick (>= 2.13.3)
-  rspec (>= 2.13.3)
-  zipruby
+  bundler (~> 1.13, >= 1.13.6)
+  jeweler (~> 2.1, >= 2.1.2)
+  json (~> 1.4)
+  nokogiri (~> 1.6.2.1)
+  rmagick (~> 2.13, >= 2.13.3)
+  rspec (~> 2.13, >= 2.13.3)
+  zipruby (~> 0)
 
 BUNDLED WITH
    1.13.6
