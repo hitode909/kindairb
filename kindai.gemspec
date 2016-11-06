@@ -86,3 +86,4 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<jeweler>, [">= 2.1.2"])
   end
 end
+
