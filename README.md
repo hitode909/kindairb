@@ -1,8 +1,8 @@
 # kindai.rb [![Build Status](https://travis-ci.org/hitode909/kindairb.png?branch=master)](https://travis-ci.org/hitode909/kindairb)
 
-## 概要
+## 近デジダウンローダー
 
-近代デジタルライブラリーから画像をダウンロードします．
+国立国会図書館デジタルコレクションから画像をダウンロードします．
 
 ## インストール
 
@@ -19,7 +19,7 @@ gemをインストールすると，kindai.rbというコマンドがインス�
 起動時の引数に，ダウンロードしたい本の URL を指定します．スペース区切りで複数指定できます．
 
 ```
-kindai.rb http://kindai.ndl.go.jp/info:ndljp/pid/922693
+kindai.rb http://dl.ndl.go.jp/info:ndljp/pid/922693
 ```
 
 URL の代わりに検索ワードを指定すると，ヒットした本をまとめてダウンロードします．AND検索もできます．
@@ -32,7 +32,7 @@ kindai.rb "松茸 調理"
 --output オプションで，保存先を指定できます．指定したディレクトリの下に，書名のディレクトリができます．
 
 ```
-kindai.rb http://kindai.ndl.go.jp/info:ndljp/pid/922693 --output ~/Documents/
+kindai.rb http://dl.ndl.go.jp/info:ndljp/pid/922693 --output ~/Documents/
 ```
 
 ## 本の加工(自動)
@@ -91,6 +91,9 @@ kindai.rb publish --position 2905x2510+270+190 "~/Documents/正義熱血社 - �
 brew install ruby imagemagick
 ```
 
+## 歴史
+
+国立国会図書館デジタルコレクションは，その昔，近代デジタルライブラリーでした．
 
 ## Copyright
 

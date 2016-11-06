@@ -30,6 +30,27 @@ describe Kindai::Book do
     @book.spreads.should have_exactly(@book.total_spread).spreads
   end
 
+  it 'normalizes permalink to canonical uri' do
+    @book.permalink_uri.should == 'http://dl.ndl.go.jp/info:ndljp/pid/922693'
+  end
+end
+
+describe Kindai::Book, '国会図書館デジタルコレクション' do
+  before do
+    @book = Kindai::Book.new_from_permalink('http://dl.ndl.go.jp/info:ndljp/pid/922693')
+  end
+
+  it 'has static permalink_uri' do
+    @book.permalink_uri.should == 'http://dl.ndl.go.jp/info:ndljp/pid/922693'
+  end
+
+  it 'has key' do
+    @book.key.should == "922693"
+  end
+
+  it 'has title' do
+    @book.title.should == '正義の叫'
+  end
 end
 
 describe Kindai::Book, 'with series' do

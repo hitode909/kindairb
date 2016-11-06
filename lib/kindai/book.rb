@@ -7,7 +7,7 @@ module Kindai
       raise "not info:ndljp: #{permalink_uri}" unless permalink_uri.match(/info\:ndljp/)
       me = new
       me.instance_eval {
-        @permalink_uri = permalink_uri
+        @permalink_uri = Kindai::Util.normalize_permalink_uri permalink_uri
       }
       return me
     end
