@@ -4,10 +4,6 @@
 
 国立国会図書館デジタルコレクションから画像をダウンロードします．
 
-## インストール
-
-RubyGemsからインストールできます．
-
 ```
 gem install kindai
 ```
@@ -81,15 +77,44 @@ kindai.rb publish --position 2905x2510+270+190 "~/Documents/正義熱血社 - �
 
 幅2905ピクセル，高さ2510ピクセル，左の余白270ピクセル，上の余白190ピクセルでトリミングされます．
 
-## 動作環境
+## インストール
 
-- Ruby が必要です．
-- RMagickを使っているので，ImageMagick が必要です．
-- Homebrewを使っている場合は以下のような雰囲気
+直接動かすことに加え，Dockerを使って動かすこともできます．
+
+### 直接動かす場合
+
+ライブラリのインストールなどで失敗するかもしれません．
+
+- Rubyが必要です．
+- RMagickを使っているので，ImageMagickが必要です．
+ - Homebrewを使っている場合は以下のような雰囲気
 
 ```
 brew install ruby imagemagick
 ```
+
+これらの準備したのちに，RubyGemsからインストールできます．
+
+```
+gem install kindai
+```
+
+### Dockerで動かす場合
+
+[Docker](https://www.docker.com/)のセットアップをしたのちに以下のコマンドで実行できます．
+Dockerの仮想環境上で実行されるので，ライブラリのセットアップで苦労することがありません．
+
+```
+docker run --rm --volume "$PWD":/workdir hitode909/kindairb
+```
+
+例：本のダウンロード
+```
+docker run --rm --volume "$PWD":/workdir hitode909/kindairb http://kindai.ndl.go.jp/info:ndljp/pid/922693
+```
+
+Docker経由で実行するときには`--output`オプションは利用できません．
+`/workdir`に本をダウンロードするので，DockerのVolume機能を使って都合のよいディレクトリを`/workdir`にマウントしてください．．
 
 ## 歴史
 
