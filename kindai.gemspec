@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib"]
   s.authors = ["hitode909"]
-  s.date = "2016-11-06"
+  s.date = "2017-03-19"
   s.description = "kindai.rb is kindai digital library downloader."
   s.email = "hitode909@gmail.com"
   s.executables = ["kindai.rb"]
@@ -63,7 +63,6 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<nokogiri>, [">= 0"])
       s.add_runtime_dependency(%q<rmagick>, [">= 2.13.3"])
       s.add_runtime_dependency(%q<zipruby>, [">= 0"])
-      s.add_runtime_dependency(%q<json>, [">= 1.4"])
       s.add_development_dependency(%q<rspec>, [">= 2.13.3"])
       s.add_development_dependency(%q<bundler>, [">= 1.13.6"])
       s.add_development_dependency(%q<jeweler>, [">= 2.1.2"])
@@ -71,7 +70,6 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<nokogiri>, [">= 0"])
       s.add_dependency(%q<rmagick>, [">= 2.13.3"])
       s.add_dependency(%q<zipruby>, [">= 0"])
-      s.add_dependency(%q<json>, [">= 1.4"])
       s.add_dependency(%q<rspec>, [">= 2.13.3"])
       s.add_dependency(%q<bundler>, [">= 1.13.6"])
       s.add_dependency(%q<jeweler>, [">= 2.1.2"])
@@ -80,7 +78,6 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<nokogiri>, [">= 0"])
     s.add_dependency(%q<rmagick>, [">= 2.13.3"])
     s.add_dependency(%q<zipruby>, [">= 0"])
-    s.add_dependency(%q<json>, [">= 1.4"])
     s.add_dependency(%q<rspec>, [">= 2.13.3"])
     s.add_dependency(%q<bundler>, [">= 1.13.6"])
     s.add_dependency(%q<jeweler>, [">= 2.1.2"])
