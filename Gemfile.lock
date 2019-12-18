@@ -45,7 +45,7 @@ GEM
       multi_xml (~> 0.5)
       rack (>= 1.2, < 3)
     public_suffix (2.0.3)
-    rack (2.0.1)
+    rack (2.0.8)
     rake (11.3.0)
     rdoc (5.0.0)
     rmagick (2.15.4)
