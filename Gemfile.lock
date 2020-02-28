@@ -46,7 +46,7 @@ GEM
       rack (>= 1.2, < 3)
     public_suffix (2.0.3)
     rack (2.0.1)
-    rake (11.3.0)
+    rake (13.0.1)
     rdoc (5.0.0)
     rmagick (2.15.4)
     rspec (2.14.1)
