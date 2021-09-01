@@ -47,7 +47,7 @@ GEM
     public_suffix (2.0.3)
     rack (2.0.1)
     rake (11.3.0)
-    rdoc (5.0.0)
+    rdoc (6.3.2)
     rmagick (2.15.4)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
